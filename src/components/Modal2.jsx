@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { BaereContext } from '../context/BaereProvider';
-import { Button, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import '../styles/form.css';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
@@ -109,8 +109,55 @@ export default function BasicModal2(props) {
           </div>
           <form id="add-new-ficha">
           <TextField id="outlined-basic" onChange={handleChange} value={state.data} name="data" label="Data do tratamento" type="date" focused variant="outlined" />
-            <TextField id="outlined-basic" onChange={handleChange} value={state.tratamento} name="tratamento" type="number" label="Tratamento" variant="outlined" />
-            <TextField id="outlined-basic" onChange={handleChange} value={state.doutor} name="doutor" type="number" label="Doutor(a)" variant="outlined" />
+          <FormControl sx={{ m: 1, minWidth: 180 }}>
+          <InputLabel id="demo-simple-select-label">Tratamento</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="tratamento-select"
+            label="Tratamento"
+            name="tratamento"
+            value={state.tratamento}
+            onChange={handleChange}
+          >
+            <MenuItem value={'2'}>Extração simples</MenuItem>
+            <MenuItem value={'3'}>Extração siso</MenuItem>
+            <MenuItem value={'4'}>Radiografia</MenuItem>
+            <MenuItem value={'5'}>Restauração 1 face</MenuItem>
+            <MenuItem value={'6'}>Restauração 2 faces</MenuItem>
+            <MenuItem value={'7'}>Restauração 3 faces</MenuItem>
+            <MenuItem value={'8'}>Canal Uniradicular</MenuItem>
+            <MenuItem value={'9'}>Canal Biradicular</MenuItem>
+            <MenuItem value={'10'}>Canal Multiradicular</MenuItem>
+            <MenuItem value={'11'}>Provisório Unitário</MenuItem>
+            <MenuItem value={'12'}>Provisório Total</MenuItem>
+            <MenuItem value={'13'}>Bloco</MenuItem>
+            <MenuItem value={'14'}>Coroa</MenuItem>
+            <MenuItem value={'15'}>Pino Intraradicular</MenuItem>
+            <MenuItem value={'16'}>Prótese Total</MenuItem>
+            <MenuItem value={'17'}>Prótese Parcial (ROACH)</MenuItem>
+            <MenuItem value={'18'}>Ponte Móvel</MenuItem>
+            <MenuItem value={'19'}>Ponte Fixa</MenuItem>
+            <MenuItem value={'20'}>Ponte Adesiva</MenuItem>
+            <MenuItem value={'21'}>Flex</MenuItem>
+            <MenuItem value={'22'}>Cimentação</MenuItem>
+            <MenuItem value={'23'}>Conserto</MenuItem>
+            <MenuItem value={'1'}>Limpeza</MenuItem>
+            <MenuItem value={'24'}>Clareamento</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 180 }}>
+          <InputLabel id="demo-simple-select-label2">Doutor</InputLabel>
+          <Select
+            labelId="demo-simple-select-label2"
+            id="doutor-select"
+            label="Doutor(a)"
+            name="doutor"
+            value={state.doutor}
+            onChange={handleChange}
+          >
+            <MenuItem value={'1'}>Renan Baere</MenuItem>
+          </Select>
+        </FormControl>
             <TextField id="outlined-basic" onChange={handleChange} value={state.valor} name="valor" type="number" label="Valor" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.acrescimo} name="acrescimo" type="number" label="Acréscimo" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.desconto} name="desconto" type="number" label="Desconto" variant="outlined" />
