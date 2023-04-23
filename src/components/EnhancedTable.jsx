@@ -228,7 +228,7 @@ function EnhancedTableToolbar(props) {
           <Tooltip title="Deletar paciente">
             <IconButton onClick={async () => {
                   try {
-                    const response = await fetch(`https://baereodontologia903-dtkwd4jzea-rj.a.run.app/pacientes/${selected[0].id}`, {
+                    const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${selected[0].id}`, {
                       method: 'DELETE',
                     });
                     setAtualize(response);

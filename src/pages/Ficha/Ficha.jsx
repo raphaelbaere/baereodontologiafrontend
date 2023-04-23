@@ -113,7 +113,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getPatientFile = async () => {
       try {
-        const response = await fetch(`https://baereodontologia903-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         setPatientFile(data);
       } catch (error) {

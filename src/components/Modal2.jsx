@@ -70,7 +70,7 @@ export default function BasicModal2(props) {
       tratamento_id: +state.tratamento,
     }
     try {
-      const response = await fetch(`https://baereodontologia903-dtkwd4jzea-rj.a.run.app/tratamentos/${id}`, {
+      const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/tratamentos/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

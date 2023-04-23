@@ -346,7 +346,7 @@ export default function EnhancedTable2(props) {
         };
       }
       try {
-        const response = await fetch(`https://baereodontologia903-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         const mapRows = data[1].map((treatment) => {
           const date = new Date(treatment.data);
