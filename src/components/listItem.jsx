@@ -5,27 +5,28 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component="a" to="/home">
+    <Link to="/home">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Painel" />
-    </ListItemButton>
-    <ListItemButton component="a" to="/pacientes">
+    </Link>
+    <Link component="a" to="/pacientes">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Pacientes" />
-    </ListItemButton>
-    <ListItemButton>
+    </Link>
+    <Link>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Balanço" />
-    </ListItemButton>
+    </Link>
   </React.Fragment>
 );
 
