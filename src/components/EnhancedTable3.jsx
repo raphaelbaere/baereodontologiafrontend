@@ -314,7 +314,7 @@ export default function EnhancedTable3(props) {
         };
       }
       try {
-        const response = await fetch(`https://baereodontologia903-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         console.log(data)
         const mapRows = data[2].map((payment) => {
