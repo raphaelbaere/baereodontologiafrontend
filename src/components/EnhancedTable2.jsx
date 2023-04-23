@@ -240,7 +240,7 @@ function EnhancedTableToolbar(props) {
           <Tooltip title="Deletar tratamento">
             <IconButton onClick={async () => {
                   try {
-                    const response = await fetch(`https://baereodontologia903-dtkwd4jzea-rj.a.run.app/tratamentos/${selected[0].id}`, {
+                    const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/tratamentos/${selected[0].id}`, {
                       method: 'DELETE',
                     });
                     setAtualize(response);
@@ -346,7 +346,7 @@ export default function EnhancedTable2(props) {
         };
       }
       try {
-        const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         const mapRows = data[1].map((treatment) => {
           const date = new Date(treatment.data);

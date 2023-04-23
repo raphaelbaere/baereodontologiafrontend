@@ -113,7 +113,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getPatientFile = async () => {
       try {
-        const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         setPatientFile(data);
       } catch (error) {
@@ -210,7 +210,7 @@ function DashboardContent() {
                     {patientFile.length > 0 ? (
                       <React.Fragment>
                     <p>CPF: {`${patientFile[0][0].cpf}`} </p>
-                    <p>Data de Nascimento: {`${patientFile[0][0].data_de_nascimento}`}</p>
+                    <p>Data de Nascimento: {`${new Date(patientFile[0][0].data_de_nascimento)}`}</p>
                     <p>Telefone: {`${patientFile[0][0].telefone}`}</p>
                     <p>CEP: {`${patientFile[0][0].endereco.cep || 'Não especificado'}`}</p>
                     <p>Estado: {`${patientFile[0][0].endereco.estado}`}</p>

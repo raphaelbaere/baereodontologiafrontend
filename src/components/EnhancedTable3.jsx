@@ -212,7 +212,7 @@ function EnhancedTableToolbar(props) {
           <Tooltip title="Deletar pagamento">
             <IconButton onClick={async () => {
                   try {
-                    const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pagamentos/${selected[0].id}`, {
+                    const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pagamentos/${selected[0].id}`, {
                       method: 'DELETE',
                     });
                     setAtualize(response);
@@ -314,7 +314,7 @@ export default function EnhancedTable3(props) {
         };
       }
       try {
-        const response = await fetch(`https://baereodontologiaversaofinal-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         console.log(data)
         const mapRows = data[2].map((payment) => {
