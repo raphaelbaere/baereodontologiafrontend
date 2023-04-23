@@ -1,0 +1,26 @@
+#form-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+#adicionar-ficha {
+   margin-top: 2%;
+   margin-left: 83%;
+}
+
+#add-new-ficha {
+    margin-top: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 80%;
+}
