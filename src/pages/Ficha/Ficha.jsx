@@ -233,9 +233,9 @@ function DashboardContent() {
                     <EnhancedTable3 setAtualize2={setAtualize2} payments={patientFile.length > 0 ? patientFile[2] || [] : []} />
                     <div id="payments">
                       {patientFile.length > 0 ? (
-                         <h3 id="total">Total: R${patientFile[1].reduce((accum,item) => accum + item.valor, 0)} |
+                         <h3 id="total">Total: R${(patientFile[1].reduce((accum,item) => accum + item.valor, 0) + patientFile[1].reduce((accum, item) => accum + item.acrescimo, 0)) - (patientFile[1].reduce((accum, item) => accum + item.desconto, 0))} |
                           Pagou: <span id="pagou">R${patientFile[2].reduce((accum,item) => accum + item.pagou, 0)}</span> |
-                           Resta: <span id="resta">R${patientFile[2].reduce((accum,item) => accum - item.pagou, patientFile[1].reduce((accum,item) => accum + item.valor, 0))}</span></h3>
+                           Resta: <span id="resta">R${(patientFile[2].reduce((accum,item) => accum - item.pagou, patientFile[1].reduce((accum,item) => accum + item.valor, 0)) + patientFile[1].reduce((accum, item) => accum + item.acrescimo, 0))  - (patientFile[1].reduce((accum, item) => accum + item.desconto, 0))}</span></h3>
                       ) : (
                         <h3>Loading</h3>
                       )}
