@@ -25,7 +25,7 @@ import { useState, useEffect } from 'react';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography id="copyright" variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Baere Odontologia
@@ -169,7 +169,7 @@ function DashboardContent(props) {
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
-            overflow: 'hidden',
+            overflowX: 'hidden'
           }}
         >
           <Toolbar />

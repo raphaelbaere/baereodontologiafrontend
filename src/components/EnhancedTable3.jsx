@@ -29,6 +29,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import BasicModal3 from './Modal3';
 import { format } from 'date-fns';
+import BasicModal6 from './Modal6';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -137,7 +138,7 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const navigate = useNavigate();
   const { numSelected, selected, setSelected, setAtualize, setAtualize2, handleChange, state } = props;
-  const { handleOpen3, open3 } = React.useContext(BaereContext);
+  const { handleOpen3, open3, handleOpen6, open6 } = React.useContext(BaereContext);
 
   return (
     <Toolbar
@@ -204,24 +205,14 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <React.Fragment>
+          <BasicModal6 setSelected={setSelected} setAtualize={setAtualize} selected={selected[0]} />
             <Tooltip title="Editar pagamento">
               <IconButton>
                 <EditIcon />
               </IconButton>
           </Tooltip>
           <Tooltip title="Deletar pagamento">
-            <IconButton onClick={async () => {
-                  try {
-                    const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pagamentos/${selected[0].id}`, {
-                      method: 'DELETE',
-                    });
-                    setAtualize(response);
-                    setAtualize2(response);
-                    setSelected([]);
-                  } catch (e) {
-                    return({ type: 404, message: e});
-                  }
-            }}>
+            <IconButton onClick={handleOpen6}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -251,9 +242,10 @@ export default function EnhancedTable3(props) {
   const [orderBy, setOrderBy] = React.useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
   const [visibleRows, setVisibleRows] = React.useState(null);
   const [atualize, setAtualize] = React.useState('');
+  const { createRows3 } = React.useContext(BaereContext);
   const [paymentRows, setPaymentRows] = React.useState('');
   const [paymentRowsOG, setPaymentRowsOG] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
@@ -305,39 +297,18 @@ export default function EnhancedTable3(props) {
   };
 
   React.useEffect(() => {
-    async function createRows2() {
-      function createData(data, pagou, id) {
-        return {
-          data, 
-          pagou,
-          id
-        };
-      }
-      try {
-        const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
-        const data = await response.json();
-        console.log(data)
-        const mapRows = data[2].map((payment) => {
-          const date = new Date(payment.data);
-          return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.id)
-        });
-        return mapRows;
-      } catch (error) {
-        console.log(error);
-      }
-    }
     const getRows = async () => {
-      const rows = await createRows2();
+      const rows = await createRows3(id);
       setPaymentRows(rows);
       setPaymentRowsOG(rows);
       let rowsOnMount = stableSort(
         rows,
-        getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
+        getComparator(order, orderBy),
       );
   
       rowsOnMount = rowsOnMount.slice(
-        0 * DEFAULT_ROWS_PER_PAGE,
-        0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+        0 * rowsPerPage,
+        0 * rowsPerPage + rowsPerPage,
       );
   
       setVisibleRows(rowsOnMount);
@@ -346,13 +317,16 @@ export default function EnhancedTable3(props) {
   }, [atualize]);
 
   const handleRequestSort = React.useCallback(
-    (event, newOrderBy) => {
+    async (event, newOrderBy) => {
+      const rows = await createRows3(id);
+      setPaymentRows(rows);
+      setPaymentRowsOG(rows);
       const isAsc = orderBy === newOrderBy && order === 'asc';
       const toggledOrder = isAsc ? 'desc' : 'asc';
       setOrder(toggledOrder);
       setOrderBy(newOrderBy);
 
-      const sortedRows = stableSort(paymentRows, getComparator(toggledOrder, newOrderBy));
+      const sortedRows = stableSort(rows, getComparator(toggledOrder, newOrderBy));
       const updatedRows = sortedRows.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
@@ -392,10 +366,13 @@ export default function EnhancedTable3(props) {
   };
 
   const handleChangePage = React.useCallback(
-    (event, newPage) => {
+    async (event, newPage) => {
+      const rows = await createRows3(id);
+      setPaymentRows(rows);
+      setPaymentRowsOG(rows);
       setPage(newPage);
 
-      const sortedRows = stableSort(paymentRows, getComparator(order, orderBy));
+      const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         newPage * rowsPerPage,
         newPage * rowsPerPage + rowsPerPage,
@@ -405,7 +382,7 @@ export default function EnhancedTable3(props) {
 
       // Avoid a layout jump when reaching the last page with empty rows.
       const numEmptyRows =
-        newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - paymentRows.length) : 0;
+        newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
 
       const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
       setPaddingHeight(newPaddingHeight);
@@ -414,13 +391,16 @@ export default function EnhancedTable3(props) {
   );
 
   const handleChangeRowsPerPage = React.useCallback(
-    (event) => {
+    async (event) => {
+      const rows = await createRows3(id);
+      setPaymentRows(rows);
+      setPaymentRowsOG(rows);
       const updatedRowsPerPage = parseInt(event.target.value, 10);
       setRowsPerPage(updatedRowsPerPage);
 
       setPage(0);
 
-      const sortedRows = stableSort(paymentRows, getComparator(order, orderBy));
+      const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         0 * updatedRowsPerPage,
         0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -516,6 +496,8 @@ export default function EnhancedTable3(props) {
           component="div"
           count={paymentRows.length}
           rowsPerPage={rowsPerPage}
+          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `mais que ${to}`}`; }}
+          labelRowsPerPage={'Linhas por página'}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}

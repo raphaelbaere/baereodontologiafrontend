@@ -27,6 +27,7 @@ import { FormControl, Input, InputLabel, InputAdornment, Select, MenuItem, TextF
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import BasicModal from './Modal';
+import BasicModal4 from './Modal4';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -147,7 +148,7 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const navigate = useNavigate();
   const { numSelected, selected, setSelected, setAtualize, handleChange, state } = props;
-  const { handleOpen, open, createRows } = React.useContext(BaereContext);
+  const { handleOpen, open, createRows, handleOpen4 } = React.useContext(BaereContext);
 
   return (
     <Toolbar
@@ -167,7 +168,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selecionada
+          Ficha do {selected[0].nome} selecionada!
         </Typography>
       ) : (
         <React.Fragment>
@@ -216,6 +217,7 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <React.Fragment>
+          <BasicModal4 setSelected={setSelected} setAtualize={setAtualize} selected={selected[0]} />
           <Tooltip title="Ir para ficha detalhada">
             <IconButton
               onClick={() => {
@@ -226,18 +228,7 @@ function EnhancedTableToolbar(props) {
             </IconButton>
           </Tooltip>
           <Tooltip title="Deletar paciente">
-            <IconButton onClick={async () => {
-                  try {
-                    const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${selected[0].id}`, {
-                      method: 'DELETE',
-                    });
-                    setAtualize(response);
-                    setSelected([]);
-                  } catch (e) {
-                    return({ type: 404, message: e});
-                  } finally {
-                  }
-            }}>
+            <IconButton onClick={() => handleOpen4()}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -272,8 +263,9 @@ export default function EnhancedTable() {
   const [paddingHeight, setPaddingHeight] = React.useState(0);
   const [atualize, setAtualize] = React.useState('');
   const { createRows } = React.useContext(BaereContext);
-  const [patientRows,setPatientRows] = React.useState([]);
-  const [patientRowsOG,setPatientRowsOG] = React.useState([]);
+  const [patientRows, setPatientRows] = React.useState([]);
+  const [length, setLength] = React.useState([]);
+  const [patientRowsOG, setPatientRowsOG] = React.useState([]);
 
   const [state, setState] = React.useState({
     searchInput: "",
@@ -291,12 +283,12 @@ export default function EnhancedTable() {
         setPatientRows(patientRowsOG);
         let rowsOnMount = stableSort(
           patientRowsOG,
-          getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
+          getComparator(order, orderBy),
         );
     
         rowsOnMount = rowsOnMount.slice(
-          0 * DEFAULT_ROWS_PER_PAGE,
-          0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+          0 * rowsPerPage,
+          0 * rowsPerPage + rowsPerPage,
         );
     
         setVisibleRows(rowsOnMount);
@@ -306,18 +298,17 @@ export default function EnhancedTable() {
       setPatientRows(filteredPatientRows);
       let rowsOnMount = stableSort(
         filteredPatientRows,
-        getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
+        getComparator(order, orderBy),
       );
   
       rowsOnMount = rowsOnMount.slice(
-        0 * DEFAULT_ROWS_PER_PAGE,
-        0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+        0 * rowsPerPage,
+        0 * rowsPerPage + rowsPerPage,
       );
   
       setVisibleRows(rowsOnMount);
     }
   };
-
 
   React.useEffect(() => {
     const getRows = async () => {
@@ -326,12 +317,12 @@ export default function EnhancedTable() {
       setPatientRowsOG(rows);
       let rowsOnMount = stableSort(
         rows,
-        getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
+        getComparator(order, orderBy),
       );
   
       rowsOnMount = rowsOnMount.slice(
-        0 * DEFAULT_ROWS_PER_PAGE,
-        0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+        0 * rowsPerPage,
+        0 * rowsPerPage + rowsPerPage,
       );
   
       setVisibleRows(rowsOnMount);
@@ -340,13 +331,16 @@ export default function EnhancedTable() {
   }, [atualize]);
 
   const handleRequestSort = React.useCallback(
-    (event, newOrderBy) => {
+    async (event, newOrderBy) => {
+      const rows = await createRows();
+      setPatientRows(rows);
+      setPatientRowsOG(rows);
       const isAsc = orderBy === newOrderBy && order === 'asc';
       const toggledOrder = isAsc ? 'desc' : 'asc';
       setOrder(toggledOrder);
       setOrderBy(newOrderBy);
 
-      const sortedRows = stableSort(patientRows, getComparator(toggledOrder, newOrderBy));
+      const sortedRows = stableSort(rows, getComparator(toggledOrder, newOrderBy));
       const updatedRows = sortedRows.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
@@ -367,39 +361,30 @@ export default function EnhancedTable() {
   };
 
   const handleClick = (event, row) => {
-    const selectedIndex = selected.indexOf(row);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, row);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
+    if (selected[0] === row) {
+      setSelected([])
+    } else {
+      setSelected([row]);
     }
-    setSelected(newSelected);
   };
 
   const handleChangePage = React.useCallback(
-    (event, newPage) => {
+    async (event, newPage) => {
+      const rows = await createRows();
+      setPatientRows(rows);
+      setPatientRowsOG(rows);
       setPage(newPage);
 
-      const sortedRows = stableSort(patientRows, getComparator(order, orderBy));
+      const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         newPage * rowsPerPage,
         newPage * rowsPerPage + rowsPerPage,
       );
-
       setVisibleRows(updatedRows);
 
       // Avoid a layout jump when reaching the last page with empty rows.
       const numEmptyRows =
-        newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - patientRows.length) : 0;
+        newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
 
       const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
       setPaddingHeight(newPaddingHeight);
@@ -408,13 +393,16 @@ export default function EnhancedTable() {
   );
 
   const handleChangeRowsPerPage = React.useCallback(
-    (event) => {
+    async (event) => {
+      const rows = await createRows();
+      setPatientRows(rows);
+      setPatientRowsOG(rows);
       const updatedRowsPerPage = parseInt(event.target.value, 10);
       setRowsPerPage(updatedRowsPerPage);
 
       setPage(0);
 
-      const sortedRows = stableSort(patientRows, getComparator(order, orderBy));
+      const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         0 * updatedRowsPerPage,
         0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -512,7 +500,9 @@ export default function EnhancedTable() {
           component="div"
           count={patientRows.length}
           rowsPerPage={rowsPerPage}
+          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `mais que ${to}`}`; }}
           page={page}
+          labelRowsPerPage={'Linhas por página'}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

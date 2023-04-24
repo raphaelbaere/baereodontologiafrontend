@@ -240,10 +240,10 @@ function DashboardContent() {
                         <h3>Loading</h3>
                       )}
                     </div>
+                    <Copyright sx={{ pt: 4 }} />
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>
