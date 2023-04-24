@@ -83,10 +83,22 @@ const headCells = [
     label: 'Doutor(a)',
   },
   {
+    id: 'dente',
+    numeric: true,
+    disablePadding: false,
+    label: 'Dente',
+  },
+  {
     id: 'valor',
     numeric: true,
     disablePadding: false,
     label: 'Valor',
+  },
+  {
+    id: 'realizado',
+    numeric: true,
+    disablePadding: false,
+    label: 'Realizado',
   },
   {
     id: 'acrescimo',
@@ -495,7 +507,9 @@ export default function EnhancedTable2(props) {
                         </TableCell>
                         <TableCell align="right">{row.tratamento}</TableCell>
                         <TableCell align="right">{row.doutor}</TableCell>
+                        <TableCell align="right">{row.dente}</TableCell>
                         <TableCell align="right">{row.valor}</TableCell>
+                        <TableCell align="right">{row.realizado}</TableCell>
                         <TableCell align="right">{row.acrescimo}</TableCell>
                         <TableCell align="right">{row.desconto}</TableCell>
                         <TableCell align="right">{row.id}</TableCell>

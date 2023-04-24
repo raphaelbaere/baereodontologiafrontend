@@ -77,6 +77,12 @@ const headCells = [
     label: 'Pagou',
   },
   {
+    id: 'tipo',
+    numeric: false,
+    disablePadding: false,
+    label: 'Tipo de pagamento',
+  },
+  {
     id: 'id',
     numeric: false,
     disablePadding: false,
@@ -197,6 +203,7 @@ function EnhancedTableToolbar(props) {
           >
             <MenuItem value={'data'}>Data</MenuItem>
             <MenuItem value={'pagou'}>Pagou</MenuItem>
+            <MenuItem value={'tipo'}>Tipo de pagamento</MenuItem>
             <MenuItem value={'id'}>ID</MenuItem>
           </Select>
         </FormControl>
@@ -463,6 +470,7 @@ export default function EnhancedTable3(props) {
                           {row.data}
                         </TableCell>
                         <TableCell align="left">{row.pagou}</TableCell>
+                        <TableCell align="left">{row.tipo}</TableCell>
                         <TableCell align="left">{row.id}</TableCell>
                       </TableRow>
                     );

@@ -56,7 +56,7 @@ function BaereProvider({children}) {
       };
     }
     try {
-      const response = await fetch('https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes');
+      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes');
       const data = await response.json();
       const mapRows = (data.map((patient) => {
         const date = new Date(patient.data_de_nascimento);
@@ -69,23 +69,26 @@ function BaereProvider({children}) {
 }
 
 async function createRows2(id) {
-  function createData(data, tratamento, doutor, valor, acrescimo, desconto, id) {
+  function createData(data, tratamento, doutor, dente, valor, realizado, acrescimo, desconto, id) {
     return {
       data, 
       tratamento, 
       doutor, 
+      dente,
       valor,
+      realizado,
       acrescimo, 
       desconto,
       id
     };
   }
   try {
-    const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
     const mapRows = data[1].map((treatment) => {
+      console.log(treatment)
       const date = new Date(treatment.data);
-      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.valor, treatment.acrescimo, treatment.desconto, treatment.id)
+      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
     });
     return mapRows;
   } catch (error) {
@@ -94,20 +97,22 @@ async function createRows2(id) {
 }
 
 async function createRows3(id) {
-  function createData(data, pagou, id) {
+  function createData(data, pagou, tipo, id) {
     return {
       data, 
       pagou,
+      tipo,
       id
     };
   }
   try {
-    const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
     console.log(data)
     const mapRows = data[2].map((payment) => {
+      console.log(payment)
       const date = new Date(payment.data);
-      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.id)
+      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
     });
     return mapRows;
   } catch (error) {

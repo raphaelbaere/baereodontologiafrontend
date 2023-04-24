@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { BaereContext } from '../context/BaereProvider';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import '../styles/form.css';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
@@ -35,6 +35,8 @@ export default function BasicModal2(props) {
     valor: "",
     acrescimo: "",
     desconto: "",
+    dente: "",
+    realizado: false,
   });
 
 
@@ -46,13 +48,17 @@ export default function BasicModal2(props) {
       valor: "",
       acrescimo: "",
       desconto: "",
+      dente: "",
+      realizado: false,
       })
     };
 
 
 
   function handleChange(evt) {
-    const value = evt.target.value;
+    console.log(state);
+    const value =
+    evt.target.type === "checkbox" ? evt.target.checked : evt.target.value;
     setState({
       ...state,
       [evt.target.name]: value
@@ -68,9 +74,10 @@ export default function BasicModal2(props) {
       valor: +state.valor,
       doutor_id: +state.doutor,
       tratamento_id: +state.tratamento,
+      realizado: state.realizado ? 'Sim' : 'Não',
     }
     try {
-      const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/tratamentos/${id}`, {
+      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,6 +150,7 @@ export default function BasicModal2(props) {
             <MenuItem value={'23'}>Conserto</MenuItem>
             <MenuItem value={'1'}>Limpeza</MenuItem>
             <MenuItem value={'24'}>Clareamento</MenuItem>
+            <MenuItem value={'25'}>Manutenção Ortodontia</MenuItem>
           </Select>
         </FormControl>
         <FormControl sx={{ m: 1, minWidth: 180 }}>
@@ -158,9 +166,11 @@ export default function BasicModal2(props) {
             <MenuItem value={'1'}>Renan Baere</MenuItem>
           </Select>
         </FormControl>
+        <TextField id="outlined-basic" onChange={handleChange} value={state.dente} name="dente" type="text" label="Dente" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.valor} name="valor" type="number" label="Valor" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.acrescimo} name="acrescimo" type="number" label="Acréscimo" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.desconto} name="desconto" type="number" label="Desconto" variant="outlined" />
+            <FormControlLabel control={<Checkbox color="success" name="realizado" checked={state.realizado} onChange={handleChange} />} label="Realizado?" />
           </form>
           <Button onClick={handleSubmit} id="adicionar-tratamento" color="success" variant="contained" endIcon={<PostAddIcon />}>
               Adicionar tratamento

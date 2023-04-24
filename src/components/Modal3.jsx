@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { BaereContext } from '../context/BaereProvider';
-import { Button, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import '../styles/form.css';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
@@ -31,6 +31,7 @@ export default function BasicModal3(props) {
   const [state, setState] = React.useState({
     data: "",
     pagou: "",
+    tipo: "",
   })
 
   function handleChange(evt) {
@@ -47,7 +48,7 @@ export default function BasicModal3(props) {
       pagou: +state.pagou
     }
     try {
-      const response = await fetch(`https://baereodontologiav900-dtkwd4jzea-rj.a.run.app/pagamentos/${id}`, {
+      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,6 +88,23 @@ export default function BasicModal3(props) {
           <form id="add-new-ficha">
           <TextField id="outlined-basic" onChange={handleChange} name="data" value={state.data} label="Data do pagamento" type="date" focused variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} name="pagou" value={state.pagou} type="number" label="Pagou" variant="outlined" />
+            <FormControl>
+            <InputLabel id="demo-simple-select-label2">Tipo do pagamento</InputLabel>
+            <Select
+            labelId="demo-simple-select-label2"
+            id="demo-simple-select-label2"
+            label="Tipo do pagamento"
+            name="tipo"
+            sx={{ width: '130px' }}
+            value={state.tipo}
+            onChange={handleChange}
+          >
+            <MenuItem value={'PIX'}>PIX</MenuItem>
+            <MenuItem value={'Dinheiro'}>Dinheiro</MenuItem>
+            <MenuItem value={'Débito'}>Débito</MenuItem>
+            <MenuItem value={'Crédito'}>Crédito</MenuItem>
+          </Select>
+          </FormControl>
           </form>
           <Button onClick={handleSubmit} id="adicionar-tratamento" color="success" variant="contained" endIcon={<PostAddIcon />}>
               Adicionar pagamento
