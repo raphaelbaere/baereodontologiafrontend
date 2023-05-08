@@ -383,6 +383,7 @@ export default function EnhancedTable() {
         newPage * rowsPerPage,
         newPage * rowsPerPage + rowsPerPage,
       );
+      console.log(updatedRows);
       setVisibleRows(updatedRows);
 
       // Avoid a layout jump when reaching the last page with empty rows.
