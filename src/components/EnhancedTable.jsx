@@ -272,7 +272,7 @@ export default function EnhancedTable() {
     searchSelect: "nome",
   })
   
-  function handleChange(evt) {
+  async function handleChange(evt) {
     const value = evt.target.value;
     setState({
       ...state,
@@ -280,9 +280,11 @@ export default function EnhancedTable() {
     });
     if (evt.target.name === 'searchInput') {
       if (evt.target.value === '') {
-        setPatientRows(patientRowsOG);
+        const rows = await createRows();
+        setPatientRows(rows);
+        setPatientRowsOG(rows);
         let rowsOnMount = stableSort(
-          patientRowsOG,
+          rows,
           getComparator(order, orderBy),
         );
     
@@ -296,6 +298,7 @@ export default function EnhancedTable() {
       }
       const filteredPatientRows = patientRows.filter((patientRow) => patientRow[state.searchSelect].toString().toLowerCase().includes(evt.target.value.toLowerCase()));
       setPatientRows(filteredPatientRows);
+
       let rowsOnMount = stableSort(
         filteredPatientRows,
         getComparator(order, orderBy),
