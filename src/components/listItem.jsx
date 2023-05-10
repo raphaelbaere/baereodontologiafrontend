@@ -5,6 +5,8 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -28,7 +30,7 @@ export const mainListItems = (
     <Link to="/atendimentos">
     <ListItemButton component="a" to="/atendimentos">
       <ListItemIcon>
-        <PeopleIcon />
+        <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Atendimentos" />
     </ListItemButton>
@@ -36,7 +38,7 @@ export const mainListItems = (
     <Link to="/pagamentos">
     <ListItemButton component="a" to="/pagamentos">
       <ListItemIcon>
-        <PeopleIcon />
+        <MonetizationOnIcon />
       </ListItemIcon>
       <ListItemText primary="Financeiro" />
     </ListItemButton>
