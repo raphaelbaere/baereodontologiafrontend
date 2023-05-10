@@ -96,6 +96,59 @@ async function createRows2(id) {
   }
 }
 
+async function createRows4() {
+  function createData(data, tratamento, doutor, dente, valor, realizado, acrescimo, desconto, id) {
+    return {
+      data, 
+      tratamento, 
+      doutor, 
+      dente,
+      valor,
+      realizado,
+      acrescimo, 
+      desconto,
+      id
+    };
+  }
+  try {
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+    const data = await response.json();
+    const mapRows = data.map((treatment) => {
+      console.log(treatment)
+      const date = new Date(treatment.data);
+      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
+    });
+    return mapRows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function createRows5() {
+  function createData(data, pagou, tipo, id) {
+    return {
+      data, 
+      pagou,
+      tipo,
+      id
+    };
+  }
+  try {
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
+    const data = await response.json();
+    console.log(data)
+    const mapRows = data.map((payment) => {
+      console.log(payment)
+      const date = new Date(payment.data);
+      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
+    });
+    return mapRows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 async function createRows3(id) {
   function createData(data, pagou, tipo, id) {
     return {
@@ -123,7 +176,7 @@ async function createRows3(id) {
 
 
   const values = useMemo(() => ({
-    open, setOpen, handleClose, handleOpen, createRows2, createRows3,
+    open, setOpen, handleClose, handleOpen, createRows2, createRows3, createRows4, createRows5,
      open2, setOpen2, open6, setOpen6, handleOpen6, handleClose6, setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4, setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows, atualiza, setAtualiza
   }), [open, open2, open3, open4, open5, open6]);
 
