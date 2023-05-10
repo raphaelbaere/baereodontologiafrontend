@@ -338,7 +338,6 @@ export default function EnhancedTable4(props) {
       const rows = await createRows4();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
-      console.log(rows)
       const filteredTreatmentRows = rows.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
       setTreatmentRows(filteredTreatmentRows);
       console.log(filteredTreatmentRows)
@@ -405,7 +404,8 @@ export default function EnhancedTable4(props) {
       setTreatmentRowsOG(rows);
       setPage(newPage);
 
-      const sortedRows = stableSort(rows, getComparator(order, orderBy));
+      const filteredTreatmentRows22 = rows.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
+      const sortedRows = stableSort(filteredTreatmentRows22, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         newPage * rowsPerPage,
         newPage * rowsPerPage + rowsPerPage,
@@ -415,7 +415,7 @@ export default function EnhancedTable4(props) {
         setVisibleRows(updatedRows);
         return;
       }
-      const filteredTreatmentRows = updatedRows.filter((treatmentRow) => treatmentRow[state.searchSelect].toString().toLowerCase().includes(state.searchInput.toLowerCase()));
+      const filteredTreatmentRows = updatedRows.filter((treatmentRow) => treatmentRow[state.searchSelect].toString().toLowerCase().includes(state.searchInput.toLowerCase() && treatmentRow.realizado === 'Sim'));
       setTreatmentRows(filteredTreatmentRows);
       setVisibleRows(filteredTreatmentRows);
       
@@ -439,7 +439,8 @@ export default function EnhancedTable4(props) {
 
       setPage(0);
 
-      const sortedRows = stableSort(rows, getComparator(order, orderBy));
+      const filteredTreatmentRows = rows.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
+      const sortedRows = stableSort(filteredTreatmentRows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         0 * updatedRowsPerPage,
         0 * updatedRowsPerPage + updatedRowsPerPage,
