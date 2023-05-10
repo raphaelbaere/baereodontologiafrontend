@@ -329,7 +329,6 @@ export default function EnhancedTable4(props) {
         0 * rowsPerPage,
         0 * rowsPerPage + rowsPerPage,
       );
-      console.log(rowsOnMount)
       setVisibleRows(rowsOnMount);
     }
   };
@@ -339,6 +338,9 @@ export default function EnhancedTable4(props) {
       const rows = await createRows4();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
+      console.log(rows)
+      const filteredTreatmentRows = treatmentRows.filter((treatmentRows) => treatmentRows.realizado);
+      setTreatmentRows(filteredTreatmentRows);
       let rowsOnMount = stableSort(
         rows,
         getComparator(order, orderBy),
@@ -414,7 +416,6 @@ export default function EnhancedTable4(props) {
       }
       const filteredTreatmentRows = updatedRows.filter((treatmentRow) => treatmentRow[state.searchSelect].toString().toLowerCase().includes(state.searchInput.toLowerCase()));
       setTreatmentRows(filteredTreatmentRows);
-      console.log(filteredTreatmentRows)
       setVisibleRows(filteredTreatmentRows);
       
       // Avoid a layout jump when reaching the last page with empty rows.
