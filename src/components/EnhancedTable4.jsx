@@ -338,11 +338,10 @@ export default function EnhancedTable4(props) {
       const rows = await createRows4();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
-      console.log(rows)
-      const filteredTreatmentRows = treatmentRows.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
+      const filteredTreatmentRows = rows.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
       setTreatmentRows(filteredTreatmentRows);
       let rowsOnMount = stableSort(
-        rows,
+        filteredTreatmentRows,
         getComparator(order, orderBy),
       );
   
