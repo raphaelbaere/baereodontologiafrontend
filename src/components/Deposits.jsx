@@ -12,7 +12,7 @@ export default function Deposits() {
     <React.Fragment>
       <Title>Últimos pagamentos</Title>
       <Typography component="p" variant="h4">
-        R$3,024.00
+        R$0,00
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         15 de Março, 2023
