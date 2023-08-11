@@ -36,7 +36,7 @@ export const mainListItems = (
     </ListItemButton>
     </Link>
     <Link to="/pagamentos">
-    <ListItemButton component="a" to="/pagamentos">
+    <ListItemButton component="a" to="/">
       <ListItemIcon>
         <MonetizationOnIcon />
       </ListItemIcon>
