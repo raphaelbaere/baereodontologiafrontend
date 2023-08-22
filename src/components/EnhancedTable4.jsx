@@ -71,6 +71,12 @@ const headCells = [
     label: 'Data',
   },
   {
+    id: 'nome',
+    numeric: false,
+    disablePadding: false,
+    label: 'Paciente',
+  },
+  {
     id: 'tratamento',
     numeric: true,
     disablePadding: false,
@@ -340,7 +346,6 @@ export default function EnhancedTable4(props) {
       setTreatmentRowsOG(rows);
       const filteredTreatmentRows = rows.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
       setTreatmentRows(filteredTreatmentRows);
-      console.log(filteredTreatmentRows)
       let rowsOnMount = stableSort(
         filteredTreatmentRows,
         getComparator(order, orderBy),
@@ -513,6 +518,7 @@ export default function EnhancedTable4(props) {
                         >
                           {row.data}
                         </TableCell>
+                        <TableCell align="left">{row.paciente}</TableCell>
                         <TableCell align="right">{row.tratamento}</TableCell>
                         <TableCell align="right">{row.doutor}</TableCell>
                         <TableCell align="right">{row.dente}</TableCell>

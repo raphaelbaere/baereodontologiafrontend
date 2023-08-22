@@ -197,21 +197,21 @@ function DashboardContent() {
             <Grid container spacing={3} sx={{ height: '160vh'}}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%', gap: '20px' }}>
-                <EnhancedTable5 setAtualize2={setAtualize2} payments={pagamentos} />
-                <div>
-                <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              {pagamentos.length > 0 ? `Caixa` : '?'}
-            </Typography>
-            <Divider />
-            <p>Total de entrada: R${pagamentos.reduce((accum, item) => accum + item.pagou, 0)},00</p>
-                </div>
-                    <Copyright sx={{ pt: 4 }} />
+                  {sessionStorage.getItem('user') === 'admin' ? (
+                                   <><EnhancedTable5 setAtualize2={setAtualize2} payments={pagamentos} /><div>
+                      <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{ flexGrow: 1 }}
+                      >
+                        {pagamentos.length > 0 ? `Caixa` : '?'}
+                      </Typography>
+                      <Divider />
+                      <p>Total de entrada: R${pagamentos.reduce((accum, item) => accum + item.pagou, 0)},00</p>
+                    </div><Copyright sx={{ pt: 4 }} /></>
+                  ) : <div><Typography>Ops.. ocorreu um erro. Tente novamente mais tarde!</Typography></div>}
                 </Paper>
               </Grid>
             </Grid>

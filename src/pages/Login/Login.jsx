@@ -41,7 +41,10 @@ export default function SignIn () {
         body: JSON.stringify(body),
       })
       if (response.status === 200) {
-        navigate('/home')
+        navigate('/home');
+        if (data.get('usuario') === 'RenanBaere') {
+          sessionStorage.setItem('user', 'admin')
+        }
       }
     } catch(e) {
       console.log(e);

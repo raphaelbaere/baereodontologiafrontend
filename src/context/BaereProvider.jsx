@@ -86,7 +86,6 @@ async function createRows2(id) {
     const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
     const mapRows = data[1].map((treatment) => {
-      console.log(treatment)
       const date = new Date(treatment.data);
       return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
     });
@@ -97,8 +96,9 @@ async function createRows2(id) {
 }
 
 async function createRows4() {
-  function createData(data, tratamento, doutor, dente, valor, realizado, acrescimo, desconto, id) {
+  function createData(paciente, data, tratamento, doutor, dente, valor, realizado, acrescimo, desconto, id) {
     return {
+      paciente,
       data, 
       tratamento, 
       doutor, 
@@ -114,9 +114,8 @@ async function createRows4() {
     const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
     const data = await response.json();
     const mapRows = data.map((treatment) => {
-      console.log(treatment)
       const date = new Date(treatment.data);
-      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
+      return createData(treatment.paciente.nome, format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
     });
     return mapRows;
   } catch (error) {
@@ -138,7 +137,6 @@ async function createRows5() {
     const data = await response.json();
     console.log(data)
     const mapRows = data.map((payment) => {
-      console.log(payment)
       const date = new Date(payment.data);
       return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
     });
@@ -163,7 +161,6 @@ async function createRows3(id) {
     const data = await response.json();
     console.log(data)
     const mapRows = data[2].map((payment) => {
-      console.log(payment)
       const date = new Date(payment.data);
       return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
     });

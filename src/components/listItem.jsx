@@ -35,8 +35,8 @@ export const mainListItems = (
       <ListItemText primary="Atendimentos" />
     </ListItemButton>
     </Link>
-    <Link to="/home">
-    <ListItemButton component="a" to="/home">
+    <Link to="/pagamentos">
+    <ListItemButton component="a" to="/pagamentos">
       <ListItemIcon>
         <MonetizationOnIcon />
       </ListItemIcon>
