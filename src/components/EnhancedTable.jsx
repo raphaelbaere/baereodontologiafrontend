@@ -281,6 +281,7 @@ export default function EnhancedTable() {
     if (evt.target.name === 'searchInput') {
       if (evt.target.value === '') {
         const rows = await createRows();
+        console.log(rows);
         setPatientRows(rows);
         setPatientRowsOG(rows);
         let rowsOnMount = stableSort(

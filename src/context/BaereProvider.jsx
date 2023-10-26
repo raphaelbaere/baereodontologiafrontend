@@ -58,7 +58,11 @@ function BaereProvider({children}) {
     try {
       const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes');
       const data = await response.json();
-      const mapRows = (data.map((patient) => {
+      console.log(data)
+      const dataSorted = data.sort(function(a, b) {
+        return b.id - a.id;
+    });
+      const mapRows = (dataSorted.map((patient) => {
         const date = new Date(patient.data_de_nascimento);
         return createData(patient.nome, format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), patient.cpf, patient.telefone, patient.id)
       }));
@@ -85,7 +89,10 @@ async function createRows2(id) {
   try {
     const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
-    const mapRows = data[1].map((treatment) => {
+    const dataSorted = data[1].sort(function(a, b) {
+      return new Date(b.data) - new Date(a.data);
+  });
+    const mapRows = dataSorted.map((treatment) => {
       const date = new Date(treatment.data);
       return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
     });
@@ -113,7 +120,10 @@ async function createRows4() {
   try {
     const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
     const data = await response.json();
-    const mapRows = data.map((treatment) => {
+    const dataSorted = data.sort(function(a, b) {
+      return new Date(b.data) - new Date(a.data);
+  });
+    const mapRows = dataSorted.map((treatment) => {
       const date = new Date(treatment.data);
       return createData(treatment.paciente.nome, format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), treatment.tratamento.nome, treatment.doutores.nome, treatment.dente, treatment.valor, treatment.realizado, treatment.acrescimo, treatment.desconto, treatment.id)
     });
@@ -135,8 +145,10 @@ async function createRows5() {
   try {
     const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
     const data = await response.json();
-    console.log(data)
-    const mapRows = data.map((payment) => {
+    const dataSorted = data.sort(function(a, b) {
+      return new Date(b.data) - new Date(a.data);
+  });
+    const mapRows = dataSorted.map((payment) => {
       const date = new Date(payment.data);
       return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
     });
@@ -159,8 +171,10 @@ async function createRows3(id) {
   try {
     const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
-    console.log(data)
-    const mapRows = data[2].map((payment) => {
+    const dataSorted = data[2].sort(function(a, b) {
+      return new Date(b.data) - new Date(a.data);
+  });
+    const mapRows = dataSorted.map((payment) => {
       const date = new Date(payment.data);
       return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
     });

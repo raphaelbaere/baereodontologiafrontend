@@ -1,0 +1,15 @@
+.custom-tooltip {
+    border: none; /* Remove a borda */
+    box-shadow: none; /* Remove sombra */
+    background-color: white; /* Define a cor de fundo desejada */
+    color: black; /* Define a cor do texto desejada */
+  }
+
+.custom-tooltip:focus {
+    outline: none;
+  }
+  
+  .custom-active-bar {
+    margin-left: 50px; /* Ajuste a margem à esquerda conforme necessário */
+  }
+  

@@ -7,6 +7,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import InsightsIcon from '@mui/icons-material/Insights';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -41,6 +42,14 @@ export const mainListItems = (
         <MonetizationOnIcon />
       </ListItemIcon>
       <ListItemText primary="Financeiro" />
+    </ListItemButton>
+    </Link>
+    <Link to="/analises">
+    <ListItemButton component="a" to="/analises">
+      <ListItemIcon>
+        <InsightsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Análises" />
     </ListItemButton>
     </Link>
   </React.Fragment>

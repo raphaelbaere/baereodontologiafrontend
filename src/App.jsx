@@ -7,6 +7,7 @@ import Pacientes from './pages/Pacientes/Pacientes';
 import Atendimentos from './pages/Atendimentos/Atendimentos';
 import Financeiro from './pages/Financeiro/Financeiro';
 import Ficha from './pages/Ficha/Ficha';
+import Analises from './pages/Analises/Analises'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/pacientes/:id" element={<Ficha />} />
       <Route path="/atendimentos" element={<Atendimentos />} />
       <Route path="/pagamentos" element={<Financeiro />} />
+      <Route path="/analises" element={<Analises />} />
     </Routes>
   );
 }
