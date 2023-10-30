@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
 
@@ -8,18 +8,46 @@ function preventDefault(event) {
 }
 
 export default function Deposits() {
+  const [data, setData] = React.useState([]);
+
+  const getDate = () => {
+    const dataString = data.data;
+    const correctMonthDate = new Date(dataString);
+    const dia = correctMonthDate.getUTCDate();
+    const mes = correctMonthDate.toLocaleString('pt-BR', { month: 'long' });
+    const ano = correctMonthDate.getUTCFullYear();
+    
+    const dataFormatada = `${dia} de ${mes} de ${ano}`;
+    return dataFormatada;
+  }
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const hoje = new Date();
+      try {
+
+      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos');
+      const paymentData = await response.json();
+
+        setData(paymentData[paymentData.length - 1]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData()
+  }, []);
   return (
     <React.Fragment>
-      <Title>Últimos pagamentos</Title>
-      <Typography component="p" variant="h4">
-        R$0,00
+      <Title>Último pagamento</Title>
+      <Typography sx={{ marginTop: '35px'}} component="p" variant="h4">
+        R${data.pagou},00
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        15 de Março, 2023
+        {getDate()}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          Ver o balanço
+        <Link to="/pagamentos" color="primary">
+          Ver mais...
         </Link>
       </div>
     </React.Fragment>

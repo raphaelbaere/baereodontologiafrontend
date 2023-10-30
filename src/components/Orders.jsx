@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,29 +7,39 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import { Button, Typography } from '@mui/material';
+import { format } from 'date-fns';
 
 // Generate Order Data
-function createData(id, nome, data, tratamento, doutor, valor, link) {
-  return { id, nome, data, tratamento, doutor, valor, link };
+function createData(data, paciente, tratamento, doutor, dente, valor, realizado, acrescimo, desconto) {
+  return { data, paciente, tratamento, doutor, dente, valor, realizado, acrescimo, desconto };
 }
-
-const rows = [
-  createData(
-    0,
-    'Raphael Baere',
-    '14 de Abril de 2023',
-    'Limpeza',
-    'Renan Baere',
-    80.00,
-    'https://drrenanbaere.com.br/ficha/1'
-  ),
-];
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
 export default function Orders() {
+  const [rows, setRows] = React.useState([]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+      const treatmentData = await response.json();
+      const lastTreament = treatmentData[treatmentData.length - 1];
+      console.log(lastTreament)
+      setRows([createData(
+        lastTreament.data,
+        lastTreament.paciente.nome,
+        lastTreament.tratamento.nome,
+        lastTreament.doutores.nome,
+        lastTreament.dente,
+        lastTreament.valor,
+        lastTreament.realizado,
+        lastTreament.acrescimo,
+        lastTreament.desconto,
+      )]);
+    }
+    fetchData()
+  }, [])
   return (
     <React.Fragment>
         <div id="title">
@@ -43,34 +53,37 @@ export default function Orders() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Nome</TableCell>
             <TableCell>Data</TableCell>
+            <TableCell>Paciente</TableCell>
             <TableCell>Tratamento</TableCell>
-            <TableCell>Doutor</TableCell>
+            <TableCell>Doutor(a)</TableCell>
+            <TableCell>Dente</TableCell>
             <TableCell>Valor</TableCell>
-            <TableCell>Link para ficha</TableCell>
+            <TableCell>Realizado</TableCell>
+            <TableCell>Acrescimo</TableCell>
+            <TableCell>Desconto</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row) => {
+            const date = new Date(row.data);
+            return (
             <TableRow key={row.id}>
-              <TableCell>{row.nome}</TableCell>
-              <TableCell>{row.data}</TableCell>
+              <TableCell>{format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy')}</TableCell>
+              <TableCell>{row.paciente}</TableCell>
               <TableCell>{row.tratamento}</TableCell>
               <TableCell>{row.doutor}</TableCell>
-              <TableCell>{`R$${row.valor}`}</TableCell>
-              <TableCell>
-                <Link
-                href="#">
-                {`${row.link}`}
-                </Link>
-              </TableCell>
+              <TableCell>{row.dente}</TableCell>
+              <TableCell>{row.valor}</TableCell>
+              <TableCell>{row.realizado}</TableCell>
+              <TableCell>{row.acrescimo}</TableCell>
+              <TableCell>{row.desconto}</TableCell>
             </TableRow>
-          ))}
+          )})}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        Ver mais pacientes
+      <Link color="primary" to="/atendimentos" style={{ marginTop: '15px'}}>
+        Ver mais...
       </Link>
     </React.Fragment>
   );
