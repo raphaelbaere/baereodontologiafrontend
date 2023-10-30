@@ -27,6 +27,7 @@ const Example = () => {
 
             const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
             const paymentData = await response.json();
+            console.log(paymentData[0].data)
 
             const monthNames = [
                 'Janeiro', 'Fevereiro', 'Março', 'Abril',

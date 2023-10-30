@@ -49,6 +49,9 @@ const Example = () => {
                 const month = isoDate.getMonth(); // Obtenha o mês (0 a 11)
             
                 // Use o mês como chave para o objeto de contagem
+                if (month === 11) {
+                  console.log(patient)
+                }
                 if (patientCounts[month] === undefined) {
                   patientCounts[month] = 1; // Se ainda não existe uma contagem para este mês, inicie com 1
                 } else {
@@ -91,7 +94,7 @@ const Example = () => {
     }}
   >
     <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="name" dx={50}tickLine={{ transform: 'translate(54, 0)' }}  angle={-90} textAnchor="end" interval={0} tick={{ fontSize: 14 }} scale="band" />
+    <XAxis dataKey="name" dx={50} tickLine={{ transform: 'translate(54, 0)' }}  angle={-90} textAnchor="end" interval={0} tick={{ fontSize: 14 }} scale="band" />
     <YAxis />
     <Tooltip content={<CustomTooltip />} />
     <Bar dataKey="value" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
