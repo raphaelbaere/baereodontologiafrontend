@@ -164,7 +164,6 @@ export default function BasicModal2(props) {
             onChange={handleChange}
           >
             <MenuItem value={'1'}>Renan Baere</MenuItem>
-            <MenuItem value={'3'}>Nataly Batista</MenuItem>
           </Select>
         </FormControl>
         <TextField id="outlined-basic" onChange={handleChange} value={state.dente} name="dente" type="text" label="Dente" variant="outlined" />
