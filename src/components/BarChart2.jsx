@@ -50,7 +50,6 @@ const Example = () => {
             
                 // Use o mês como chave para o objeto de contagem
                 if (month === 11) {
-                  console.log(patient)
                 }
                 if (patientCounts[month] === undefined) {
                   patientCounts[month] = 1; // Se ainda não existe uma contagem para este mês, inicie com 1
@@ -71,7 +70,6 @@ const Example = () => {
 
   
           // Definir os dados no estado
-          console.log(dataArr)
           setData(dataArr);
         } catch (error) {
           console.log(error);

@@ -9,7 +9,8 @@ const CustomTooltip = ({ active, payload }) => {
       return (
         <div className="custom-tooltip" style={{ border: 'none', boxShadow: 'none', backgroundColor: 'white', color: 'black' }}>
           <p><strong>Mês:</strong> {payload[0].payload.name}</p>
-          <p><strong>Montante arrendado:</strong> R${payload[0].value}</p>
+          <p><strong>Rendimento Bruto:</strong> R${payload[0].payload.bruto}</p>
+          <p><strong>Rendimento Líquido:</strong> R${payload[0].payload.lucro}</p>
         </div>
       );
     }
@@ -27,7 +28,9 @@ const Example = () => {
 
             const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
             const paymentData = await response.json();
-            console.log(paymentData[0].data)
+            const treatment = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+            const treatmentData = await treatment.json();
+            const treatmentDataFiltered = treatmentData.filter((eachTreatment) => eachTreatment.realizado === 'Sim');
 
             const monthNames = [
                 'Janeiro', 'Fevereiro', 'Março', 'Abril',
@@ -50,16 +53,30 @@ const Example = () => {
             
                 // Use o mês como chave para o objeto de contagem
                 if (paymentCounts[month] === undefined) {
-                    paymentCounts[month] = payment.pagou; // Se ainda não existe uma contagem para este mês, inicie com 1
+                    paymentCounts[month] = {
+                      bruto: payment.pagou,
+                    };
                 } else {
-                    paymentCounts[month] += payment.pagou; // Se já existe uma contagem, incremente
+                    paymentCounts[month].bruto += payment.pagou;
                 }
               });
 
-              const dataArr = Object.entries(paymentCounts).map(([month, value], index) => ({
+              treatmentDataFiltered.forEach((treatment) => {
+                const isoDate = new Date(treatment.data); // Converta a data ISO em um objeto Date
+                const month = isoDate.getMonth(); // Obtenha o mês (0 a 11)
+            
+                // Use o mês como chave para o objeto de contagem
+                if (paymentCounts[month].desconto === undefined) {
+                    paymentCounts[month].desconto = treatment.desconto
+                } else {
+                    paymentCounts[month].desconto += treatment.desconto;
+                }
+              });
+
+              const dataArr = Object.entries(paymentCounts).map(([month, values], index) => ({
                 name: monthNames[month], // Use o array de nomes dos meses
-                value,
-                // Você pode adicionar a lógica de cores aqui, similar à que você usou antes
+                bruto: values.bruto,
+                lucro: values.bruto - values.desconto,
                 fill: colors[index],
               }));
             
@@ -68,7 +85,6 @@ const Example = () => {
 
   
           // Definir os dados no estado
-          console.log(dataArr)
           setData(dataArr);
         } catch (error) {
           console.log(error);
@@ -94,7 +110,8 @@ const Example = () => {
     <XAxis dataKey="name"  angle={-90} textAnchor="end" interval={0} tickLine={{ transform: 'translate(28, 0)' }} tick={{ fontSize: 10, dx: 25}} scale="band" />
     <YAxis />
     <Tooltip content={<CustomTooltip />} />
-    <Bar dataKey="value" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+    <Bar dataKey="bruto" fill="#82ca9d" name="Montante Arrendado" />
+    <Bar dataKey="lucro" fill="#8884d8" name="Lucro Líquido" fillOpacity={0.6} />
   </BarChart>
 </ResponsiveContainer>
   );

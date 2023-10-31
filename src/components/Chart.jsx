@@ -11,7 +11,8 @@ const CustomTooltip = ({ active, payload }) => {
       return (
         <div className="custom-tooltip" style={{ border: 'none', boxShadow: 'none', backgroundColor: 'white', color: 'black' }}>
           <p><strong>Dia:</strong> {payload[0].payload.name}</p>
-          <p><strong>Montante:</strong> R${payload[0].value},00</p>
+          <p><strong>Rendimento Bruto:</strong> R${payload[0].payload.bruto},00</p>
+          <p><strong>Rendimento Líquido:</strong> R${payload[0].payload.lucro},00</p>
         </div>
       );
     }
@@ -38,6 +39,11 @@ const Example = () => {
         try {
           const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
           const paymentData = await response.json();
+
+          const treatment = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+          const treatmentData = await treatment.json();
+          const treatmentDataFiltered = treatmentData.filter((eachTreatment) => eachTreatment.realizado === 'Sim');
+
           
           const today = new Date();
           const firstDayOfWeek = new Date(today);
@@ -58,25 +64,43 @@ const Example = () => {
 
           // Inicialize o objeto com valores zero para todos os dias da semana
           for (let i = 1; i < 7; i++) {
-            paymentCounts[i] = 0;
+            paymentCounts[i] = {
+              bruto: 0,
+              desconto: 0,
+            };
           }
           
           paymentData.forEach((payment) => {
             const isoDate = new Date(payment.data);
             if (isoDate >= firstDayOfWeek && isoDate <= lastDayOfWeek) {
-              console.log(payment);
               const day = isoDate.getUTCDay();
               if (paymentCounts[day] === undefined) {
-                paymentCounts[day] = payment.pagou;
+                paymentCounts[month] = {
+                  bruto: payment.pagou,
+                };
               } else {
-                paymentCounts[day] += payment.pagou;
+                paymentCounts[day].bruto += payment.pagou;
               }
             }
           });
           
-          const dataArr = Object.entries(paymentCounts).map(([day, value], index) => ({
-            name: dayNames[day],
-            value,
+          treatmentDataFiltered.forEach((treatment) => {
+            const isoDate = new Date(treatment.data);
+            if (isoDate >= firstDayOfWeek && isoDate <= lastDayOfWeek) {
+              const day = isoDate.getUTCDay();
+              if (paymentCounts[day].desconto === undefined) {
+                paymentCounts[day].desconto = treatment.desconto;
+              } else {
+                console.log(treatment.desconto)
+                paymentCounts[day].desconto += treatment.desconto;
+              }
+            }
+          });
+          
+          const dataArr = Object.entries(paymentCounts).map(([day, values], index) => ({
+            name: dayNames[day], // Use o array de nomes dos meses
+            bruto: values.bruto,
+            lucro: values.bruto - values.desconto,
             fill: colors[index],
           }));
           
@@ -108,15 +132,16 @@ const Example = () => {
     margin={{
       top: 40,
       right: 25,
-      left: -10,
+      left: 10,
       bottom: 45, // Aumente a margem inferior para acomodar rótulos na vertical
     }}
   >
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" dx={50} tickLine={{ transform: 'translate(54, 0)' }}  angle={-90} textAnchor="end" interval={0} tick={{ fontSize: 14 }} scale="band" />
-    <YAxis />
+    <YAxis tickFormatter={(value) => `R$${value}`}/>
     <Tooltip content={<CustomTooltip />} />
-    <Bar dataKey="value" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+    <Bar dataKey="bruto" fill="#82ca9d" name="Montante Arrendado" />
+    <Bar dataKey="lucro" fill="#8884d8" name="Lucro Líquido" fillOpacity={0.6} />
   </BarChart>
 </ResponsiveContainer>
 </>

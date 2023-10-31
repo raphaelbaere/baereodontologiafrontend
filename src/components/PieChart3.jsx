@@ -60,7 +60,6 @@ const Example = () => {
 
   
           // Definir os dados no estado
-          console.log(dataArr)
           setData(dataArr);
         } catch (error) {
           console.log(error);

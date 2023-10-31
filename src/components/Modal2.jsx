@@ -35,6 +35,7 @@ export default function BasicModal2(props) {
     valor: "",
     acrescimo: "",
     desconto: "",
+    custo: "",
     dente: "",
     realizado: false,
   });
@@ -48,6 +49,7 @@ export default function BasicModal2(props) {
       valor: "",
       acrescimo: "",
       desconto: "",
+      custo: "",
       dente: "",
       realizado: false,
       })
@@ -70,7 +72,7 @@ export default function BasicModal2(props) {
     const body = {
       ...state,
       acrescimo: +state.acrescimo,
-      desconto: +state.desconto,
+      desconto: +state.desconto + (+state.custo),
       valor: +state.valor,
       doutor_id: +state.doutor,
       tratamento_id: +state.tratamento,
@@ -170,6 +172,7 @@ export default function BasicModal2(props) {
             <TextField id="outlined-basic" onChange={handleChange} value={state.valor} name="valor" type="number" label="Valor" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.acrescimo} name="acrescimo" type="number" label="Acréscimo" variant="outlined" />
             <TextField id="outlined-basic" onChange={handleChange} value={state.desconto} name="desconto" type="number" label="Desconto" variant="outlined" />
+            <TextField id="outlined-basic" onChange={handleChange} value={state.custo} name="custo" type="number" label="Custo" variant="outlined" />
             <FormControlLabel control={<Checkbox color="success" name="realizado" checked={state.realizado} onChange={handleChange} />} label="Realizado?" />
           </form>
           <Button onClick={handleSubmit} id="adicionar-tratamento" color="success" variant="contained" endIcon={<PostAddIcon />}>
