@@ -113,7 +113,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getAtendimentos = async () => {
       try {
-        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+        const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/tratamentos`);
         const data = await response.json();
         setAtendimentos(data);
       } catch (error) {

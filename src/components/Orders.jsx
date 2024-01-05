@@ -22,7 +22,7 @@ export default function Orders() {
   const [rows, setRows] = React.useState([]);
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+      const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/tratamentos`);
       const treatmentData = await response.json();
       const lastTreament = treatmentData[treatmentData.length - 1];
       console.log(lastTreament)

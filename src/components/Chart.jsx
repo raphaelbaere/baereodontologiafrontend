@@ -37,10 +37,10 @@ const Example = () => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
-          const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
+          const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pagamentos`);
           const paymentData = await response.json();
 
-          const treatment = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+          const treatment = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/tratamentos`);
           const treatmentData = await treatment.json();
           const treatmentDataFiltered = treatmentData.filter((eachTreatment) => eachTreatment.realizado === 'Sim');
 

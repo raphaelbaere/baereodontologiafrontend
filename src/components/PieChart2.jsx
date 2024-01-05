@@ -32,7 +32,7 @@ const Example = () => {
         try {
             const patientCounts = {};
 
-            const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+            const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/tratamentos`);
             const treatmentData = await response.json();
             const treatmenteDataFiltered = treatmentData.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
             
