@@ -56,7 +56,7 @@ function BaereProvider({children}) {
       };
     }
     try {
-      const response = await fetch('https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pacientes');
+      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes');
       const data = await response.json();
       console.log(data)
       const dataSorted = data.sort(function(a, b) {
@@ -87,7 +87,7 @@ async function createRows2(id) {
     };
   }
   try {
-    const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
     const dataSorted = data[1].sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -118,7 +118,7 @@ async function createRows4() {
     };
   }
   try {
-    const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/tratamentos`);
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
     const data = await response.json();
     const dataSorted = data.sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -143,7 +143,7 @@ async function createRows5() {
     };
   }
   try {
-    const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pagamentos`);
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
     const data = await response.json();
     const dataSorted = data.sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -169,7 +169,7 @@ async function createRows3(id) {
     };
   }
   try {
-    const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+    const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
     const data = await response.json();
     const dataSorted = data[2].sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);

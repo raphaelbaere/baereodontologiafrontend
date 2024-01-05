@@ -112,7 +112,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getPagamentos = async () => {
       try {
-        const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pagamentos`);
+        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
         const data = await response.json();
         setPagamentos(data);
       } catch (error) {

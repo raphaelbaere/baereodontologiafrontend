@@ -28,7 +28,7 @@ export default function BasicModal5(props) {
 
   const handleDelete = async () => {
     try {
-        const response = await fetch(`https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/tratamentos/${selected.id}`, {
+        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos/${selected.id}`, {
           method: 'DELETE',
         });
         setAtualize(response);

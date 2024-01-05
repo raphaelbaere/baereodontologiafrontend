@@ -23,7 +23,7 @@ const Example = () => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
-          const response = await fetch('https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/pacientes');
+          const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes');
           const locationData = await response.json();
   
           // Processar os dados para contar o número de pacientes em cada bairro

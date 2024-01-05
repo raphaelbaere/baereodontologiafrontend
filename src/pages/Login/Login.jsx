@@ -33,14 +33,14 @@ export default function SignIn () {
       password: data.get('senha')
     };
     try {
-      const response = await fetch('https://baereodontologiav889-dtkwd4jzea-rj.a.run.app/login', {
+      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
       })
-      if (true) {
+      if (response.status === 200) {
         navigate('/home');
         if (data.get('usuario') === 'RenanBaere') {
           sessionStorage.setItem('user', 'admin')
