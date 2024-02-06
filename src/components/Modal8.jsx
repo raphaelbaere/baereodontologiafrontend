@@ -73,8 +73,8 @@ export default function BasicModal8(props) {
       dataDeNascimento: state.data_de_nascimento,
     }
     try {
-      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes', {
-        method: 'POST',
+      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
