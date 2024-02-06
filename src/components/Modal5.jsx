@@ -28,17 +28,21 @@ export default function BasicModal5(props) {
 
   const handleDelete = async () => {
     try {
-        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos/${selected.id}`, {
+      await Promise.all(selected.map(async (item) => {
+        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos/${item.id}`, {
           method: 'DELETE',
         });
-        setAtualize(response);
-        handleClose5();
-        setSelected([]);
-      } catch (e) {
-        return({ type: 404, message: e});
-      } finally {
-      }
+        return response;
+      }));
+      // Atualize após a deleção de todos os tratamentos
+      setAtualize(true);
+      handleClose5();
+      setSelected([]);
+    } catch (error) {
+      console.error('Erro ao excluir tratamentos:', error);
+    }
   }
+
 
   return (
     <div>
@@ -50,11 +54,11 @@ export default function BasicModal5(props) {
       >
         <Box className="deleted-box" sx={style}>
           <Typography className="deleted-title" variant="h6" component="h2">
-            Tem certeza que deseja <span className="delete-span">remover</span> o tratamento de ID <span className="deleted-name">{selected.id}</span>
+            Tem certeza que deseja remover os tratamentos?
           </Typography>
           <div className="buttons-delete-box">
-          <Button onClick={handleDelete} color="error" className="delete-button">Sim, desejo remover o tratamento</Button>
-          <Button onClick={handleClose5} className="non-delete-button">Não desejo remover o tratamento</Button>
+          <Button onClick={handleDelete} color="error" className="delete-button">Sim, desejo remover os tratamentos</Button>
+          <Button onClick={handleClose5} className="non-delete-button">Não desejo remover os tratamentos</Button>
           </div>
         </Box>
       </Modal>

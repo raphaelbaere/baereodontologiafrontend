@@ -30,6 +30,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import BasicModal3 from './Modal3';
 import { format } from 'date-fns';
 import BasicModal6 from './Modal6';
+import BasicModal7 from './Modal7';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -144,7 +145,7 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const navigate = useNavigate();
   const { numSelected, selected, setSelected, setAtualize, setAtualize2, handleChange, state } = props;
-  const { handleOpen3, open3, handleOpen6, open6 } = React.useContext(BaereContext);
+  const { handleOpen3, open3, handleOpen6, open6, handleOpen7 } = React.useContext(BaereContext);
 
   return (
     <Toolbar
@@ -164,7 +165,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selecionada
+          {numSelected} selecionadas
         </Typography>
       ) : (
         <React.Fragment>
@@ -212,12 +213,15 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <React.Fragment>
-          <BasicModal6 setSelected={setSelected} setAtualize={setAtualize} selected={selected[0]} />
-            <Tooltip title="Editar pagamento">
-              <IconButton>
-                <EditIcon />
-              </IconButton>
-          </Tooltip>
+          <BasicModal6 setSelected={setSelected} setAtualize={setAtualize} selected={selected} />
+          <BasicModal7 setSelected={setSelected} setAtualize={setAtualize} selected={selected[0]} />
+        {numSelected === 1 ? (
+                      <Tooltip title="Editar pagamento">
+                      <IconButton onClick={handleOpen7}>
+                        <EditIcon />
+                      </IconButton>
+                  </Tooltip>
+        ): <></>}
           <Tooltip title="Deletar pagamento">
             <IconButton onClick={handleOpen6}>
               <DeleteIcon />
@@ -354,12 +358,27 @@ export default function EnhancedTable5(props) {
   };
 
   const handleClick = (event, row) => {
-    if (selected[0] === row) {
-      setSelected([])
-    } else {
-      setSelected([row]);
+    const selectedIndex = selected.indexOf(row);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      // Adiciona o elemento selecionado
+      newSelected = newSelected.concat(selected, row);
+    } else if (selectedIndex === 0) {
+      // Remove o elemento selecionado
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      // Remove o último elemento selecionado
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      // Remove o elemento selecionado no meio da lista
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
     }
-  };
+    setSelected(newSelected);
+  }
 
   const handleChangePage = React.useCallback(
     async (event, newPage) => {

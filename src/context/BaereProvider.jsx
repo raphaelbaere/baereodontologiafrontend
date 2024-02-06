@@ -19,6 +19,13 @@ function BaereProvider({children}) {
 
   const [open6, setOpen6] = React.useState(false);
 
+  const [open7, setOpen7] = React.useState(false);
+
+  const [open8, setOpen8] = React.useState(false);
+
+  const [open9, setOpen9] = React.useState(false);
+
+
   const [atualiza, setAtualiza] = React.useState(false);
 
   const handleOpen2 = () => setOpen2(true);
@@ -40,6 +47,20 @@ function BaereProvider({children}) {
   const handleOpen6 = () => setOpen6(true);
 
   const handleClose6 = () => setOpen6(false);
+
+  
+  const handleOpen7 = () => setOpen7(true);
+
+  const handleClose7 = () => setOpen7(false);
+
+  const handleOpen8 = () => setOpen8(true);
+
+  const handleClose8 = () => setOpen8(false);
+
+  
+  const handleOpen9 = () => setOpen9(true);
+
+  const handleClose9 = () => setOpen9(false);
 
   const handleOpen = () => setOpen(true);
   
@@ -188,8 +209,12 @@ async function createRows3(id) {
 
   const values = useMemo(() => ({
     open, setOpen, handleClose, handleOpen, createRows2, createRows3, createRows4, createRows5,
-     open2, setOpen2, open6, setOpen6, handleOpen6, handleClose6, setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4, setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows, atualiza, setAtualiza
-  }), [open, open2, open3, open4, open5, open6]);
+     open2, setOpen2, open6, setOpen6, handleOpen6, handleClose6, handleOpen7, handleClose7, open7,
+     handleOpen8, handleClose8, open8, handleClose9, handleOpen9, open9,
+      setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4,
+       setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows,
+        atualiza, setAtualiza
+  }), [open, open2, open3, open4, open5, open6, open7, open8, open9]);
 
   return (
     <BaereContext.Provider value={ values }>

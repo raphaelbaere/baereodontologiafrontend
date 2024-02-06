@@ -19,6 +19,7 @@ import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { visuallyHidden } from '@mui/utils';
@@ -28,6 +29,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import BasicModal from './Modal';
 import BasicModal4 from './Modal4';
+import BasicModal8 from './Modal8';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -148,7 +150,7 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const navigate = useNavigate();
   const { numSelected, selected, setSelected, setAtualize, handleChange, state } = props;
-  const { handleOpen, open, createRows, handleOpen4 } = React.useContext(BaereContext);
+  const { handleOpen, open, createRows, handleOpen4, open8, handleOpen8 } = React.useContext(BaereContext);
 
   return (
     <Toolbar
@@ -168,7 +170,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          Ficha do {selected[0].nome} selecionada!
+          {selected.length === 1 ? `Ficha do ${selected[0].nome} selecionada!` : `${selected.length} Fichas Selecionadas`}
         </Typography>
       ) : (
         <React.Fragment>
@@ -217,16 +219,26 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <React.Fragment>
-          <BasicModal4 setSelected={setSelected} setAtualize={setAtualize} selected={selected[0]} />
-          <Tooltip title="Ir para ficha detalhada">
-            <IconButton
-              onClick={() => {
-                navigate(`/pacientes/${selected[0].id}`)
-              }}
-            >
-              <OpenInNewIcon />
-            </IconButton>
-          </Tooltip>
+          <BasicModal4 setSelected={setSelected} setAtualize={setAtualize} selected={selected} />
+          <BasicModal8 setSelected={setSelected} setAtualize={setAtualize} selected={selected[0]} />
+          {numSelected === 1 ? (
+                      <Tooltip title="Ir para ficha detalhada">
+                      <IconButton
+                        onClick={() => {
+                          navigate(`/pacientes/${selected[0].id}`)
+                        }}
+                      >
+                        <OpenInNewIcon />
+                      </IconButton>
+                    </Tooltip>
+          ) : <></>}
+            {numSelected === 1 ? (
+                        <Tooltip title="Editar paciente">
+                        <IconButton>
+                          <EditIcon onClick={() => handleOpen8()}/>
+                        </IconButton>
+                    </Tooltip>
+            ) : <></>}
           <Tooltip title="Deletar paciente">
             <IconButton onClick={() => handleOpen4()}>
               <DeleteIcon />
@@ -365,12 +377,28 @@ export default function EnhancedTable() {
   };
 
   const handleClick = (event, row) => {
-    if (selected[0] === row) {
-      setSelected([])
-    } else {
-      setSelected([row]);
+    const selectedIndex = selected.indexOf(row);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      // Adiciona o elemento selecionado
+      newSelected = newSelected.concat(selected, row);
+    } else if (selectedIndex === 0) {
+      // Remove o elemento selecionado
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      // Remove o último elemento selecionado
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      // Remove o elemento selecionado no meio da lista
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
     }
-  };
+    setSelected(newSelected);
+    console.log(newSelected)
+  }
 
   const handleChangePage = React.useCallback(
     async (event, newPage) => {

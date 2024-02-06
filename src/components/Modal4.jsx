@@ -28,16 +28,20 @@ export default function BasicModal4(props) {
 
   const handleDelete = async () => {
     try {
-        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`, {
+      console.log(selected)
+      await Promise.all(selected.map(async (item) => {
+        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${item.id}`, {
           method: 'DELETE',
         });
-        setAtualize(response);
-        handleClose4();
-        setSelected([]);
-      } catch (e) {
-        return({ type: 404, message: e});
-      } finally {
-      }
+        return response;
+      }));
+      // Atualize após a deleção de todos os pacientes
+      setAtualize(true);
+      handleClose4();
+      setSelected([]);
+    } catch (error) {
+      console.error('Erro ao excluir pacientes:', error);
+    }
   }
 
   return (
@@ -50,11 +54,11 @@ export default function BasicModal4(props) {
       >
         <Box className="deleted-box" sx={style}>
           <Typography className="deleted-title" variant="h6" component="h2">
-            Tem certeza que deseja <span className="delete-span">remover</span> a ficha do <br></br><span className="deleted-name">{selected.nome}</span>
+            Tem certeza que deseja remover as fichas selecionadas?
           </Typography>
           <div className="buttons-delete-box">
-          <Button onClick={handleDelete} color="error" className="delete-button">Sim, desejo remover a ficha</Button>
-          <Button onClick={handleClose4} className="non-delete-button">Não desejo remover a ficha</Button>
+          <Button onClick={handleDelete} color="error" className="delete-button">Sim, desejo remover as fichas</Button>
+          <Button onClick={handleClose4} className="non-delete-button">Não desejo remover as fichas</Button>
           </div>
         </Box>
       </Modal>

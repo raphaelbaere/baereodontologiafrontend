@@ -25,19 +25,20 @@ const style = {
 export default function BasicModal6(props) {
   const { setAtualize, setSelected, selected } = props;
   const { open6, handleClose6 } = React.useContext(BaereContext);
-
   const handleDelete = async () => {
     try {
-        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos/${selected.id}`, {
+      await Promise.all(selected.map(async (item) => {
+        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos/${item.id}`, {
           method: 'DELETE',
         });
-        setAtualize(response);
-        handleClose6();
-        setSelected([]);
-      } catch (e) {
-        return({ type: 404, message: e});
-      } finally {
-      }
+        return response;
+      }));
+      setAtualize(true);
+      handleClose6();
+      setSelected([]);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
@@ -50,11 +51,11 @@ export default function BasicModal6(props) {
       >
         <Box className="deleted-box" sx={style}>
           <Typography className="deleted-title" variant="h6" component="h2">
-            Tem certeza que deseja <span className="delete-span">remover</span> o pagamento de ID <span className="deleted-name">{selected.id}</span>
+            Tem certeza que deseja <span className="delete-span">remover</span> os pagamentos selecionados?
           </Typography>
           <div className="buttons-delete-box">
-          <Button onClick={handleDelete} color="error" className="delete-button">Sim, desejo remover o pagamento</Button>
-          <Button onClick={handleClose6} className="non-delete-button">Não desejo remover o pagamento</Button>
+            <Button onClick={handleDelete} color="error" className="delete-button">Sim, desejo remover os pagamentos</Button>
+            <Button onClick={handleClose6} className="non-delete-button">Não desejo remover os pagamentos</Button>
           </div>
         </Box>
       </Modal>
