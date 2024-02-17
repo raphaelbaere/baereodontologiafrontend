@@ -70,7 +70,7 @@ export default function BasicModal8(props) {
   const handleSubmit = async () => {
     const body = {
       ...state,
-      dataDeNascimento: state.data_de_nascimento,
+      data: state.data_de_nascimento,
     }
     try {
       const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`, {
