@@ -3,6 +3,7 @@ import '../styles/recharts.css'
 import {
   BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label
 } from 'recharts';
+import { BaereContext } from '../context/BaereProvider';
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {

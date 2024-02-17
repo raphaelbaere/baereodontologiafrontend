@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
+import { BaereContext } from '../context/BaereProvider';
 
 function preventDefault(event) {
   event.preventDefault();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, PureComponent } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { parseISO, differenceInYears } from 'date-fns';
+import { BaereContext } from '../context/BaereProvider';
 
 const COLORS = ['#000000', '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF5733'];
 const RADIAN = Math.PI / 180;

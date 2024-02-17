@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import { Button, Typography } from '@mui/material';
 import { format } from 'date-fns';
+import { BaereContext } from '../context/BaereProvider';
 
 // Generate Order Data
 function createData(data, paciente, tratamento, doutor, dente, valor, realizado, acrescimo, desconto) {
@@ -20,9 +21,10 @@ function preventDefault(event) {
 
 export default function Orders() {
   const [rows, setRows] = React.useState([]);
+  const { urlRequisicao } = React.useContext(BaereContext);
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+      const response = await fetch(`${urlRequisicao}/tratamentos`);
       const treatmentData = await response.json();
       const lastTreament = treatmentData[treatmentData.length - 1];
       console.log(lastTreament)

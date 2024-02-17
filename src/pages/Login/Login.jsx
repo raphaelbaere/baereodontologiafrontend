@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import '../../styles/Login.css';
 import { useNavigate } from 'react-router-dom';
+import { BaereContext } from '../../context/BaereProvider';
 
 function Copyright(props) {
   return (

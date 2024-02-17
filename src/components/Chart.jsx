@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import Title from './Title';
 import { Typography } from '@mui/material';
+import { BaereContext } from '../context/BaereProvider';
 
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
