@@ -25,13 +25,13 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 const Example = () => {
     const [data, setData] = useState([]);
-
+    const { urlRequisicao } = React.useContext(BaereContext);
     useEffect(() => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
 
-            const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`);
+            const response = await fetch(`${urlRequisicao}/pagamentos`);
             const paymentData = await response.json();
             
               const paymentCounts = {};

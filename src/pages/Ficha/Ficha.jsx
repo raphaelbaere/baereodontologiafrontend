@@ -104,6 +104,7 @@ const theme2 = createTheme({
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const [patientFile, setPatientFile] = React.useState([]);
   const [atualize2, setAtualize2] = React.useState('');
   const { id } = useParams();
@@ -114,7 +115,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getPatientFile = async () => {
       try {
-        const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`${urlRequisicao}/pacientes/${id}`);
         const data = await response.json();
         setPatientFile(data);
       } catch (error) {

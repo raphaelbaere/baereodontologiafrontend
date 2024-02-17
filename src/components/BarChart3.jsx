@@ -19,16 +19,16 @@ const CustomTooltip = ({ active, payload }) => {
 
 const Example = () => {
     const [data, setData] = useState([]);
-
+    const { urlRequisicao } = React.useContext(BaereContext);
     useEffect(() => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
             const paymentCounts = {};
 
-            const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos`);
+            const response = await fetch(`${urlRequisicao}/pagamentos`);
             const paymentData = await response.json();
-            const treatment = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/tratamentos`);
+            const treatment = await fetch(`${urlRequisicao}/tratamentos`);
             const treatmentData = await treatment.json();
             const treatmentDataFiltered = treatmentData.filter((eachTreatment) => eachTreatment.realizado === 'Sim');
 

@@ -25,6 +25,7 @@ const style = {
 export default function BasicModal(props) {
   const { setAtualize } = props;
   const { open, handleClose } = React.useContext(BaereContext);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const [state, setState] = React.useState({
     nome: "",
     data_de_nascimento: "",
@@ -73,7 +74,7 @@ export default function BasicModal(props) {
       dataDeNascimento: state.data_de_nascimento,
     }
     try {
-      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes', {
+      const response = await fetch(`${urlRequisicao}/pacientes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -104,6 +104,7 @@ const theme2 = createTheme({
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const [pagamentos, setPagamentos] = React.useState([]);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const [atualize2, setAtualize2] = React.useState('');
   const toggleDrawer = () => {
     setOpen(!open);
@@ -112,7 +113,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getPagamentos = async () => {
       try {
-        const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos`);
+        const response = await fetch(`${urlRequisicao}/pagamentos`);
         const data = await response.json();
         setPagamentos(data);
       } catch (error) {

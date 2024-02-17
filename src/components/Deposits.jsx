@@ -9,7 +9,8 @@ function preventDefault(event) {
 
 export default function Deposits() {
   const [data, setData] = React.useState([]);
-
+  const { urlRequisicao } = React.useContext(BaereContext);
+  
   const getDate = () => {
     const dataString = data.data;
     const correctMonthDate = new Date(dataString);
@@ -26,7 +27,7 @@ export default function Deposits() {
       const hoje = new Date();
       try {
 
-      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos');
+      const response = await fetch(`${urlRequisicao}/pagamentos`);
       const paymentData = await response.json();
 
         setData(paymentData[paymentData.length - 1]);

@@ -26,6 +26,7 @@ const style = {
 export default function BasicModal10(props) {
   const { setAtualize, handleSelectSlot } = props;
   const { open10, handleClose10 } = React.useContext(BaereContext);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const { id } = useParams();
 
   const [state, setState] = React.useState({
@@ -52,7 +53,7 @@ export default function BasicModal10(props) {
 
   React.useEffect(() => {
     const fetchPacientes = async () => {
-      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes');
+      const response = await fetch(`${urlRequisicao}/pacientes`);
       const data = await response.json();
       setState((prev) => ({
         ...prev,

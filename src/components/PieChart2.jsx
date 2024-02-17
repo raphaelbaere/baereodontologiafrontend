@@ -25,14 +25,14 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 const Example = () => {
     const [data, setData] = useState([]);
-
+    const { urlRequisicao } = React.useContext(BaereContext);
     useEffect(() => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
             const patientCounts = {};
 
-            const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`);
+            const response = await fetch(`${urlRequisicao}/tratamentos`);
             const treatmentData = await response.json();
             const treatmenteDataFiltered = treatmentData.filter((treatmentRows) => treatmentRows.realizado === 'Sim');
             

@@ -25,12 +25,13 @@ const Example = () => {
     { name: 'Adultos', value: 1 },
     { name: 'Idosos', value: 1 },
   ]);
+  const { urlRequisicao } = React.useContext(BaereContext);
 
   useEffect(() => {
     const fetchData = async () => {
       const hoje = Date.now();
       try {
-        const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes');
+        const response = await fetch(`${urlRequisicao}/pacientes`);
         const ageData = await response.json();
 
         // Calcular a idade e atualizar o valor de cada faixa etária

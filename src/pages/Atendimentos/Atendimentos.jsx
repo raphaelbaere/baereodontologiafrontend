@@ -105,6 +105,7 @@ function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const [atendimentos, setAtendimentos] = React.useState([]);
   const [atualize2, setAtualize2] = React.useState('');
+  const { urlRequisicao } = React.useContext(BaereContext);
   const { id } = useParams();
   const toggleDrawer = () => {
     setOpen(!open);
@@ -113,7 +114,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getAtendimentos = async () => {
       try {
-        const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/tratamentos`);
+        const response = await fetch(`${urlRequisicao}/tratamentos`);
         const data = await response.json();
         setAtendimentos(data);
       } catch (error) {

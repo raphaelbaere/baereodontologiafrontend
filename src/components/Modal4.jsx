@@ -25,12 +25,12 @@ const style = {
 export default function BasicModal4(props) {
   const { setAtualize, setSelected, selected } = props;
   const { open4, handleClose4 } = React.useContext(BaereContext);
-
+  const { urlRequisicao } = React.useContext(BaereContext);
   const handleDelete = async () => {
     try {
       console.log(selected)
       await Promise.all(selected.map(async (item) => {
-        const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${item.id}`, {
+        const response = await fetch(`${urlRequisicao}/pacientes/${item.id}`, {
           method: 'DELETE',
         });
         return response;

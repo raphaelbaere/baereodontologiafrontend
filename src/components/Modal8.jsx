@@ -25,6 +25,7 @@ const style = {
 export default function BasicModal8(props) {
   const { setAtualize, selected } = props;
   const { open8, handleClose8 } = React.useContext(BaereContext);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const [state, setState] = React.useState({
     nome: "",
     data_de_nascimento: "",
@@ -73,7 +74,7 @@ export default function BasicModal8(props) {
       data: state.data_de_nascimento,
     }
     try {
-      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`, {
+      const response = await fetch(`${urlRequisicao}/pacientes/${selected.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ export default function BasicModal8(props) {
   React.useEffect(() => {
     const getPatientFile = async () => {
         try {
-          const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`);
+          const response = await fetch(`${urlRequisicao}/pacientes/${selected.id}`);
           const data = await response.json();
           const paciente = data[0][0];
           setState({

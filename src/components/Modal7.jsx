@@ -26,6 +26,7 @@ const style = {
 export default function BasicModal7(props) {
   const { setAtualize, setAtualize2, selected } = props;
   const { open7, handleClose7 } = React.useContext(BaereContext);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const { id } = useParams();
 
   const [state, setState] = React.useState({
@@ -48,7 +49,7 @@ export default function BasicModal7(props) {
       pagou: +state.pagou
     }
     try {
-      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos/${selected.id}`, {
+      const response = await fetch(`${urlRequisicao}/pagamentos/${selected.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -80,11 +81,11 @@ export default function BasicModal7(props) {
         try {
             let response;
             if (id) {
-                response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`, {
+                response = await fetch(`${urlRequisicao}/pacientes/${id}`, {
                     method: 'GET',
                 });
             } else {
-                response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos`, {
+                response = await fetch(`${urlRequisicao}/pagamentos`, {
                     method: 'GET',
                 });
             }

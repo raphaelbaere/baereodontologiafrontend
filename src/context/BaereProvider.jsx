@@ -9,6 +9,8 @@ export const BaereContext = createContext();
 function BaereProvider({children}) {
   const [open, setOpen] = React.useState(false);
 
+  const urlRequisicao = 'https://extbaereodontoserver2027-dtkwd4jzea-rj.a.run.app';
+
   const [open2, setOpen2] = React.useState(false);
 
   const [open3, setOpen3] = React.useState(false);
@@ -90,7 +92,7 @@ function BaereProvider({children}) {
       };
     }
     try {
-      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes');
+      const response = await fetch(`${urlRequisicao}/pacientes`);
       const data = await response.json();
       console.log(data)
       const dataSorted = data.sort(function(a, b) {
@@ -121,7 +123,7 @@ async function createRows2(id) {
     };
   }
   try {
-    const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+    const response = await fetch(`${urlRequisicao}/pacientes/${id}`);
     const data = await response.json();
     const dataSorted = data[1].sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -152,7 +154,7 @@ async function createRows4() {
     };
   }
   try {
-    const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/tratamentos`);
+    const response = await fetch(`${urlRequisicao}/tratamentos`);
     const data = await response.json();
     const dataSorted = data.sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -177,7 +179,7 @@ async function createRows5() {
     };
   }
   try {
-    const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos`);
+    const response = await fetch(`${urlRequisicao}/pagamentos`);
     const data = await response.json();
     const dataSorted = data.sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -203,7 +205,7 @@ async function createRows3(id) {
     };
   }
   try {
-    const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+    const response = await fetch(`${urlRequisicao}/pacientes/${id}`);
     const data = await response.json();
     const dataSorted = data[2].sort(function(a, b) {
       return new Date(b.data) - new Date(a.data);
@@ -226,7 +228,7 @@ async function createRows3(id) {
      handleOpen8, handleClose8, open8, handleClose9, handleOpen9, open9,
       setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4,
        setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows,
-        atualiza, setAtualiza, setOpen9, handleClose10, handleOpen10, open10, handleOpen11, setOpen11, handleClose11, open11,
+        atualiza, setAtualiza, setOpen9, handleClose10, handleOpen10, urlRequisicao, open10, handleOpen11, setOpen11, handleClose11, open11,
   }), [open, open2, open3, open4, open5, open6, open7, open8, open9, open10, open11]);
 
   return (

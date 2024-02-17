@@ -25,6 +25,7 @@ function Copyright(props) {
 
 export default function SignIn () {
   const navigate = useNavigate();
+  const { urlRequisicao } = React.useContext(BaereContext);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -33,7 +34,7 @@ export default function SignIn () {
       password: data.get('senha')
     };
     try {
-      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/login', {
+      const response = await fetch(`${urlRequisicao}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

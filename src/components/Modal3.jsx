@@ -26,6 +26,7 @@ const style = {
 export default function BasicModal3(props) {
   const { setAtualize, setAtualize2 } = props;
   const { open3, handleClose3 } = React.useContext(BaereContext);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const { id } = useParams();
 
   const [state, setState] = React.useState({
@@ -48,7 +49,7 @@ export default function BasicModal3(props) {
       pagou: +state.pagou
     }
     try {
-      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos/${id}`, {
+      const response = await fetch(`${urlRequisicao}/pagamentos/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

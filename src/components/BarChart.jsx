@@ -18,12 +18,12 @@ const CustomTooltip = ({ active, payload }) => {
 
 const Example = () => {
     const [data, setData] = useState([]);
-
+    const { urlRequisicao } = React.useContext(BaereContext);
     useEffect(() => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
-          const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes');
+          const response = await fetch(`${urlRequisicao}/pacientes`);
           const locationData = await response.json();
   
           // Processar os dados para contar o número de pacientes em cada bairro
