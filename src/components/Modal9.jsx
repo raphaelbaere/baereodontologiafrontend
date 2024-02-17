@@ -71,6 +71,7 @@ export default function BasicModal9(props) {
   const handleSubmit = async () => {
     const body = {
       ...state,
+      data: state.data,
       acrescimo: +state.acrescimo,
       desconto: +state.desconto + (+state.custo),
       valor: +state.valor,
@@ -79,7 +80,7 @@ export default function BasicModal9(props) {
       realizado: state.realizado ? 'Sim' : 'Não',
     }
     try {
-      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos/${selected.id}`, {
+      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/tratamentos/${selected.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -109,11 +110,11 @@ export default function BasicModal9(props) {
         try {
             let response;
             if (id) {
-                response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`, {
+                response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`, {
                     method: 'GET',
                 });
             } else {
-                response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/tratamentos`, {
+                response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/tratamentos`, {
                     method: 'GET',
                 });
             }

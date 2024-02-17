@@ -30,6 +30,7 @@ import EnhancedTable3 from '../../components/EnhancedTable3';
 import BasicModal3 from '../../components/Modal3';
 import { useParams } from 'react-router-dom';
 import { BaereContext } from '../../context/BaereProvider';
+import EnhancedTable6 from '../../components/EnhancedTable6';
 
 function Copyright(props) {
   return (
@@ -113,7 +114,7 @@ function DashboardContent() {
   React.useEffect(() => {
     const getPatientFile = async () => {
       try {
-        const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
+        const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`);
         const data = await response.json();
         setPatientFile(data);
       } catch (error) {
@@ -227,6 +228,8 @@ function DashboardContent() {
                     )}
                     </div>
                     </div>
+                    <Divider></Divider>
+                    <EnhancedTable6 setAtualize2={setAtualize2} treatments={patientFile.length > 0 ? patientFile[1] || [] : []} />
                     <Divider>Controle de tratamentos</Divider>
                     <EnhancedTable2 setAtualize2={setAtualize2} treatments={patientFile.length > 0 ? patientFile[1] || [] : []} />
                     <Divider>Controle de pagamentos</Divider>

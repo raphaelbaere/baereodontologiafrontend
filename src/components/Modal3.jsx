@@ -48,7 +48,7 @@ export default function BasicModal3(props) {
       pagou: +state.pagou
     }
     try {
-      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos/${id}`, {
+      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

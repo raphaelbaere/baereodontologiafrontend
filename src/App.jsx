@@ -8,6 +8,8 @@ import Atendimentos from './pages/Atendimentos/Atendimentos';
 import Financeiro from './pages/Financeiro/Financeiro';
 import Ficha from './pages/Ficha/Ficha';
 import Analises from './pages/Analises/Analises'
+import Agenda from './pages/Agenda/Agenda';
+import Agenda2 from './pages/Agenda/Agenda2';
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
       <Route path="/atendimentos" element={<Atendimentos />} />
       <Route path="/pagamentos" element={<Financeiro />} />
       <Route path="/analises" element={<Analises />} />
+      <Route path="/agenda" element={<Agenda2 />} />
     </Routes>
   );
 }

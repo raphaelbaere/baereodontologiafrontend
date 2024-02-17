@@ -48,7 +48,7 @@ export default function BasicModal7(props) {
       pagou: +state.pagou
     }
     try {
-      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos/${selected.id}`, {
+      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos/${selected.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -80,11 +80,11 @@ export default function BasicModal7(props) {
         try {
             let response;
             if (id) {
-                response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${id}`, {
+                response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${id}`, {
                     method: 'GET',
                 });
             } else {
-                response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos`, {
+                response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos`, {
                     method: 'GET',
                 });
             }

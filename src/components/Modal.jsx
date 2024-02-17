@@ -73,7 +73,7 @@ export default function BasicModal(props) {
       dataDeNascimento: state.data_de_nascimento,
     }
     try {
-      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes', {
+      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

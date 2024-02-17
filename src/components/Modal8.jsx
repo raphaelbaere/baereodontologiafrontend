@@ -73,13 +73,14 @@ export default function BasicModal8(props) {
       dataDeNascimento: state.data_de_nascimento,
     }
     try {
-      const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`, {
+      const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
       });
+      console.log(response, 'aqui');
       setAtualize(body);
       handleClose8();
     } catch (e) {
@@ -99,7 +100,7 @@ export default function BasicModal8(props) {
   React.useEffect(() => {
     const getPatientFile = async () => {
         try {
-          const response = await fetch(`https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`);
+          const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pacientes/${selected.id}`);
           const data = await response.json();
           const paciente = data[0][0];
           setState({

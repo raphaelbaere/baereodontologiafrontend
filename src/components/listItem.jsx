@@ -9,6 +9,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import InsightsIcon from '@mui/icons-material/Insights';
 import { Link } from 'react-router-dom';
+import EventIcon from '@mui/icons-material/Event';
 
 export const mainListItems = (
   <React.Fragment>
@@ -42,6 +43,14 @@ export const mainListItems = (
         <MonetizationOnIcon />
       </ListItemIcon>
       <ListItemText primary="Financeiro" />
+    </ListItemButton>
+    </Link>
+    <Link to="/agenda">
+    <ListItemButton component="a" to="/agenda">
+      <ListItemIcon>
+        <EventIcon />
+      </ListItemIcon>
+      <ListItemText primary="Agenda" />
     </ListItemButton>
     </Link>
     <Link to="/analises">

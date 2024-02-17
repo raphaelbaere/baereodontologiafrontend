@@ -26,7 +26,7 @@ export default function Deposits() {
       const hoje = new Date();
       try {
 
-      const response = await fetch('https://baereodontologiav888-dtkwd4jzea-rj.a.run.app/pagamentos');
+      const response = await fetch('https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos');
       const paymentData = await response.json();
 
         setData(paymentData[paymentData.length - 1]);

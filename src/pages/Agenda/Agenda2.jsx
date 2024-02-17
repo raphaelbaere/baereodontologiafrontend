@@ -18,22 +18,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from '../../components/listItem';
-import Chart from '../../components/Chart';
-import Deposits from '../../components/Deposits';
-import Orders from '../../components/Orders';
-import { Avatar } from '@mui/material';
-import '../../styles/ficha.css'
-import CustomizedTables from '../../components/EnhancedTable2';
-import EnhancedTable2 from '../../components/EnhancedTable2';
-import BasicModal2 from '../../components/Modal2';
-import BasicModal3 from '../../components/Modal3';
-import { useParams } from 'react-router-dom';
-import { BaereContext } from '../../context/BaereProvider';
-import EnhancedTable5 from '../../components/EnhancedTable5';
+import EnhancedTable from '../../components/EnhancedTable';
+import BasicModal from '../../components/Modal';
+import '../../styles/Pacientes.css';
+import { useState, useEffect } from 'react';
+import Agenda from './Agenda';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography id="copyright" variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Baere Odontologia
@@ -90,6 +83,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+
+
 const theme2 = createTheme({
     palette: {
       primary: {
@@ -101,26 +96,12 @@ const theme2 = createTheme({
     },
   });
 
-function DashboardContent() {
+function DashboardContent(props) {
+  const [atualize, setAtualize] = React.useState('');
   const [open, setOpen] = React.useState(true);
-  const [pagamentos, setPagamentos] = React.useState([]);
-  const [atualize2, setAtualize2] = React.useState('');
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  React.useEffect(() => {
-    const getPagamentos = async () => {
-      try {
-        const response = await fetch(`https://extbaereodontoserver2026-dtkwd4jzea-rj.a.run.app/pagamentos`);
-        const data = await response.json();
-        setPagamentos(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getPagamentos();
-  }, [atualize2]);
 
   return (
     <ThemeProvider theme={theme2}>
@@ -151,7 +132,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {pagamentos.length > 0 ? `Pagamentos` : '?'}
+              Agenda
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -189,39 +170,37 @@ function DashboardContent() {
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
-            overflow: 'auto',
+            overflowX: 'hidden'
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3} sx={{ height: '160vh'}}>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%', gap: '20px' }}>
-                  {sessionStorage.getItem('user') === 'admin' ? (
-                                   <><EnhancedTable5 setAtualize2={setAtualize2} payments={pagamentos} /><div>
-                      <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        sx={{ flexGrow: 1 }}
-                      >
-                        {pagamentos.length > 0 ? `Caixa` : '?'}
-                      </Typography>
-                      <Divider />
-                      <p>Total de entrada: R${pagamentos.reduce((accum, item) => accum + item.pagou, 0)},00</p>
-                    </div><Copyright sx={{ pt: 4 }} /></>
-                  ) : <div><Typography>Ops.. ocorreu um erro. Tente novamente mais tarde!</Typography></div>}
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4, width: 1450  }}>
+            <Grid container spacing={3}>
+              {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 'auto',
+                  }}
+                >
+                <Agenda setAtualize={setAtualize}></Agenda>
                 </Paper>
               </Grid>
+              {/* Recent Deposits */}
+              {/* Recent Orders */}
             </Grid>
           </Container>
+          <Copyright />
         </Box>
       </Box>
     </ThemeProvider>
   );
 }
 
-export default function Dashboard() {
+export default function Agenda2() {
+
   return <DashboardContent />;
 }
