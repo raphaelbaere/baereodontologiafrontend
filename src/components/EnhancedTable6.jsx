@@ -34,6 +34,8 @@ import BasicModal8 from './Modal8';
 import BasicModal9 from './Modal9';
 import BasicModal10 from './Modal10';
 import BasicModal11 from './Modal11';
+import BasicModal12 from './Modal12';
+import BasicModal13 from './Modal13';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -160,7 +162,7 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const navigate = useNavigate();
   const { numSelected, selected, setSelected, setAtualize, setAtualize2, handleChange, state } = props;
-  const { handleOpen2, open2, handleOpen5, open5, handleOpen9, handleOpen11, open11 } = React.useContext(BaereContext);
+  const { handleOpen2, open2, handleOpen5, open5, handleOpen9, handleOpen11, open11, handleOpen13, handleOpen12, handleClose12, open12 } = React.useContext(BaereContext);
 
   return (
     <Toolbar
@@ -197,17 +199,17 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <React.Fragment>
-          <BasicModal5 selected={selected} setAtualize={setAtualize} setSelected={setSelected} />
-          <BasicModal9 selected={selected[0]} setAtualize={setAtualize} setSelected={setSelected} />
+          <BasicModal12 selected={selected[0]} setAtualize={setAtualize} setSelected={setSelected} />
+          <BasicModal13 selected={selected} setAtualize={setAtualize} setSelected={setSelected} />
           {numSelected === 1 ? (
-                      <Tooltip title="Editar tratamento">
-                      <IconButton onClick={handleOpen9}>
+                      <Tooltip title="Editar anamnese">
+                      <IconButton onClick={handleOpen12}>
                         <EditIcon />
                       </IconButton>
                   </Tooltip>
         ) : <></>}
-          <Tooltip title="Deletar tratamento">
-            <IconButton onClick={handleOpen5}>
+          <Tooltip title="Deletar anamnese">
+            <IconButton onClick={handleOpen13}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -428,6 +430,7 @@ export default function EnhancedTable6(props) {
       <Paper sx={{ width: '100%', mb: 2 }}>
       <EnhancedTableToolbar state={state} handleChange={handleChange} setAtualize2={setAtualize2} setAtualize={setAtualize} setSelected={setSelected} numSelected={selected.length} selected={selected} />
         <BasicModal11 setAtualize2={setAtualize2} setAtualize={setAtualize}/>
+        <BasicModal12 selected={selected[0]} setAtualize={setAtualize} setSelected={setSelected} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}

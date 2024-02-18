@@ -24,3 +24,28 @@
     gap: 10px;
     height: 80%;
 }
+
+#info-event {
+    margin-top: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 70%; 
+}
+
+#event-inner {
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 80%; 
+}

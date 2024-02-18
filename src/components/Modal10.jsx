@@ -26,7 +26,7 @@ const style = {
 export default function BasicModal10(props) {
   const { setAtualize, handleSelectSlot } = props;
   const { open10, handleClose10 } = React.useContext(BaereContext);
-  const { urlRequisicao } = React.useContext(BaereContext);
+  const { urlRequisicao, endDate, startDate } = React.useContext(BaereContext);
   const { id } = useParams();
 
   const [state, setState] = React.useState({
@@ -48,6 +48,26 @@ export default function BasicModal10(props) {
   const handleSubmit = async () => {
     const body = {
       ...state,
+      paciente_id: +state.paciente,
+      doutor_id: +state.doutor,
+      tratamento_id: +state.tratamento,
+      start_date: startDate,
+      end_date: endDate,
+    }
+    console.log(body)
+    try {
+      const response = await fetch(`${urlRequisicao}/eventos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      console.log(response);
+      handleClose10();
+      setAtualize(body);
+    } catch (e) {
+      return({ type: 404, message: e});
     }
   }
 
@@ -109,12 +129,12 @@ export default function BasicModal10(props) {
             labelId="demo-simple-select-label2"
             id="demo-simple-select-label2"
             label="Doutor"
-            name="tratamento"
+            name="doutor"
             sx={{ width: '150px' }}
-            value={state.tratamento}
+            value={state.doutor}
             onChange={handleChange}
           >
-            <MenuItem value={'PIX'}>Renan Baere</MenuItem>
+            <MenuItem value={'1'}>Renan Baere</MenuItem>
           </Select>
           </FormControl>
           <FormControl>
@@ -122,10 +142,10 @@ export default function BasicModal10(props) {
             <Select
             labelId="demo-simple-select-label2"
             id="demo-simple-select-label2"
-            label="Doutor"
-            name="doutor"
+            label="Tratamento"
+            name="tratamento"
             sx={{ width: '200px' }}
-            value={state.doutor}
+            value={state.tratamento}
             onChange={handleChange}
           >
             <MenuItem value={'2'}>Extração simples</MenuItem>

@@ -5,6 +5,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'moment/dist/locale/pt-br';
 import BasicModal10 from '../../components/Modal10';
 import { BaereContext } from '../../context/BaereProvider';
+import { format } from 'date-fns';
+import BasicModal14 from '../../components/Modal14';
 
 moment.locale('pt-br');
 
@@ -14,10 +16,31 @@ export default function Agenda(props, {
     dayLayoutAlgorithm = 'no-overlap',
 }) {
     const { setAtualize } = props;
-    const [myEvents, setEvents] = useState([]);
+    const [myEvents, setMyEvents] = useState([]);
+    const { urlRequisicao, handleOpen14, setEventSelected } = React.useContext(BaereContext);
+
+    useEffect(() => {
+        const fetchEventos = async () => {
+            const response = await fetch(`${urlRequisicao}/eventos`);
+            const data = await response.json();
+            const dataMapped = data.map((evento) => ({
+            id: evento.id,
+            start: evento.start_date,
+            end: evento.end_date,
+            title: evento.titulo
+        }))
+        setMyEvents(dataMapped);
+            
+        }
+        fetchEventos();
+    }, [myEvents])
 
     const handleSelectEvent = useCallback(
-        (event) => window.alert(event.title),
+        (event) => {
+            setEventSelected(event);
+            console.log(event);
+            handleOpen14();
+        },
         []
     );
     
@@ -47,13 +70,15 @@ export default function Agenda(props, {
 
     const [rightToLeft, setRightToLeft] = useState(false);
 
-    const { handleOpen10, open10 } = React.useContext(BaereContext);
+    const { handleOpen10, open10, setStartDate, startDate, endDate, setEndDate } = React.useContext(BaereContext);
 
     const handleSelectSlot = useCallback(
         ({ start, end }, modalInfo) => {
+            setStartDate(format(start.setDate(start.getDate() + 1), 'yyyy-MM-dd HH:mm:ss'));
+            setEndDate(format(end.setDate(end.getDate() - 1), 'yyyy-MM-dd HH:mm:ss'));
             handleOpen10();
         },
-        [setEvents]
+        [myEvents]
     );
 
     useEffect(() => {
@@ -62,7 +87,8 @@ export default function Agenda(props, {
 
     return (
         <Fragment>
-            <BasicModal10 setAtualize={setAtualize} setEvents={setEvents} handleSelectSlot={handleSelectSlot} />
+            <BasicModal10 setAtualize={setAtualize} setEvents={setMyEvents} handleSelectSlot={handleSelectSlot} />
+            <BasicModal14 setAtualize={setAtualize} setEvents={setMyEvents} handleSelectSlot={handleSelectSlot} />
             <div style={{ height: '100vh'}}>
                 <Calendar
                     dayLayoutAlgorithm={dayLayoutAlgorithm}

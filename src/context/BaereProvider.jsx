@@ -9,7 +9,13 @@ export const BaereContext = createContext();
 function BaereProvider({children}) {
   const [open, setOpen] = React.useState(false);
 
-  const urlRequisicao = 'https://extbaereodontoserver2032-dtkwd4jzea-rj.a.run.app';
+  const urlRequisicao = 'https://extbaereodontoserver2041-dtkwd4jzea-rj.a.run.app';
+
+  const [startDate, setStartDate] = React.useState('');
+
+  const [endDate, setEndDate] = React.useState('');
+
+  const [eventSelected, setEventSelected] = React.useState('');
 
   const [open2, setOpen2] = React.useState(false);
 
@@ -31,6 +37,12 @@ function BaereProvider({children}) {
 
   
   const [open11, setOpen11] = React.useState(false);
+
+  const [open12, setOpen12] = React.useState(false);
+
+  const [open13, setOpen13] = React.useState(false);
+
+  const [open14, setOpen14] = React.useState(false);
 
 
   const [atualiza, setAtualiza] = React.useState(false);
@@ -76,6 +88,19 @@ function BaereProvider({children}) {
   const handleOpen11 = () => setOpen11(true);
 
   const handleClose11 = () => setOpen11(false);
+
+  
+  const handleOpen12 = () => setOpen12(true);
+
+  const handleClose12 = () => setOpen12(false);
+
+  const handleOpen13 = () => setOpen13(true);
+
+  const handleClose13 = () => setOpen13(false);
+
+  const handleOpen14 = () => setOpen14(true);
+
+  const handleClose14 = () => setOpen14(false);
 
   const handleOpen = () => setOpen(true);
   
@@ -195,7 +220,9 @@ async function createRows5() {
 }
 
 async function createRows6(id) {
-  function createData(alergia,
+  function createData(
+  id,
+  alergia,
   medicacao,
   complicacao,
   valvula,
@@ -203,6 +230,7 @@ async function createRows6(id) {
   diabetico,
   paciente_id) {
     return {
+      id,
       alergia,
       medicacao,
       complicacao,
@@ -214,10 +242,11 @@ async function createRows6(id) {
   }
   try {
     const response = await fetch(`${urlRequisicao}/anamnese/${id}`);
+    console.log(response);
     const data = await response.json();
     console.log(data, 'aqui')
     const mapRows = data.map((anamnese) => {
-      return createData(anamnese.alergia, anamnese.medicacao, anamnese.complicacao, anamnese.valvula, anamnese.hipertenso, anamnese.diabetico, anamnese.paciente_id)
+      return createData(anamnese.id, anamnese.alergia, anamnese.medicacao, anamnese.complicacao, anamnese.valvula, anamnese.hipertenso, anamnese.diabetico, anamnese.paciente_id)
     });
     return mapRows;
   } catch (error) {
@@ -254,13 +283,13 @@ async function createRows3(id) {
 
 
   const values = useMemo(() => ({
-    open, setOpen, handleClose, handleOpen, createRows2, createRows3, createRows4, createRows5,
+    open, setOpen, handleClose, handleOpen, createRows2, createRows3, createRows4, createRows5, open14, handleOpen14, handleClose14, setOpen14,
      open2, setOpen2, open6, setOpen6, handleOpen6, handleClose6, handleOpen7, handleClose7, open7,
-     handleOpen8, handleClose8, open8, handleClose9, handleOpen9, open9,
-      setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4,
-       setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows,
-        atualiza, setAtualiza, setOpen9, handleClose10, handleOpen10, createRows6, urlRequisicao, open10, handleOpen11, setOpen11, handleClose11, open11,
-  }), [open, open2, open3, open4, open5, open6, open7, open8, open9, open10, open11]);
+     handleOpen8, handleClose8, open8, handleClose9, handleOpen9, open9, open13, handleOpen13, handleClose13, setOpen13,
+      setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4, setEventSelected, eventSelected,
+       setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows, setOpen12, handleClose12, handleOpen12, open12,
+        atualiza, startDate, setStartDate, endDate, setEndDate, setAtualiza, setOpen9, handleClose10, handleOpen10, createRows6, urlRequisicao, open10, handleOpen11, setOpen11, handleClose11, open11,
+  }), [open, open2, open3, open4, open5, open6, open7, open8, open9, open10, open11, open12, open13, open14, eventSelected]);
 
   return (
     <BaereContext.Provider value={ values }>
