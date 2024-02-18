@@ -293,7 +293,8 @@ export default function EnhancedTable6(props) {
 
   React.useEffect(() => {
     const getRows = async () => {
-      const rows = await createRows6();
+      const rows = await createRows6(id);
+      console.log(rows);
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       let rowsOnMount = stableSort(
@@ -313,7 +314,7 @@ export default function EnhancedTable6(props) {
 
   const handleRequestSort = React.useCallback(
     async (event, newOrderBy) => {
-      const rows = await createRows6();
+      const rows = await createRows6(id);
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       const isAsc = orderBy === newOrderBy && order === 'asc';
@@ -334,7 +335,7 @@ export default function EnhancedTable6(props) {
 
   const handleSelectAllClick = async (event) => {
     if (event.target.checked) {
-      const rows = await createRows6();
+      const rows = await createRows6(id);
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       const newSelected = rows.map((n) => n);
@@ -369,7 +370,7 @@ export default function EnhancedTable6(props) {
 
   const handleChangePage = React.useCallback(
     async (event, newPage) => {
-      const rows = await createRows6();
+      const rows = await createRows6(id);
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       setPage(newPage);
@@ -394,7 +395,7 @@ export default function EnhancedTable6(props) {
 
   const handleChangeRowsPerPage = React.useCallback(
     async (event) => {
-      const rows = await createRows6();
+      const rows = await createRows6(id);
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       const updatedRowsPerPage = parseInt(event.target.value, 10);
@@ -468,7 +469,7 @@ export default function EnhancedTable6(props) {
                         >
                           {row.alergia}
                         </TableCell>
-                        <TableCell align="right">{row.alergia}</TableCell>
+                        <TableCell align="right">{row.medicacao}</TableCell>
                         <TableCell align="right">{row.complicacao}</TableCell>
                         <TableCell align="right">{row.valvula}</TableCell>
                         <TableCell align="right">{row.hipertenso}</TableCell>

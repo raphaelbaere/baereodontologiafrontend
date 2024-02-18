@@ -9,7 +9,7 @@ export const BaereContext = createContext();
 function BaereProvider({children}) {
   const [open, setOpen] = React.useState(false);
 
-  const urlRequisicao = 'https://extbaereodontoserver2031-dtkwd4jzea-rj.a.run.app';
+  const urlRequisicao = 'https://extbaereodontoserver2032-dtkwd4jzea-rj.a.run.app';
 
   const [open2, setOpen2] = React.useState(false);
 
@@ -194,28 +194,30 @@ async function createRows5() {
   }
 }
 
-async function createRows6() {
+async function createRows6(id) {
   function createData(alergia,
   medicacao,
   complicacao,
   valvula,
   hipertenso,
-  diabetico) {
+  diabetico,
+  paciente_id) {
     return {
       alergia,
       medicacao,
       complicacao,
       valvula,
       hipertenso,
-      diabetico
+      diabetico,
+      paciente_id
     };
   }
   try {
-    const response = await fetch(`${urlRequisicao}/anamnese`);
+    const response = await fetch(`${urlRequisicao}/anamnese/${id}`);
     const data = await response.json();
-
+    console.log(data, 'aqui')
     const mapRows = data.map((anamnese) => {
-      return createData(format(anamnese.alergia, anamnese.medicacao, anamnese.complicacao, anamnese.valvula, anamnese.hipertenso, anamnese.diabetico))
+      return createData(anamnese.alergia, anamnese.medicacao, anamnese.complicacao, anamnese.valvula, anamnese.hipertenso, anamnese.diabetico, anamnese.paciente_id)
     });
     return mapRows;
   } catch (error) {
