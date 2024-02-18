@@ -257,7 +257,7 @@ async function createRows3(id) {
      handleOpen8, handleClose8, open8, handleClose9, handleOpen9, open9,
       setOpen5, handleOpen5, handleClose5, open5, handleOpen2, handleOpen4, handleClose4, open4,
        setOpen4, open3, setOpen3, handleOpen3, handleClose3, handleClose2, createRows,
-        atualiza, setAtualiza, setOpen9, handleClose10, handleOpen10, urlRequisicao, open10, handleOpen11, setOpen11, handleClose11, open11,
+        atualiza, setAtualiza, setOpen9, handleClose10, handleOpen10, createRows6, urlRequisicao, open10, handleOpen11, setOpen11, handleClose11, open11,
   }), [open, open2, open3, open4, open5, open6, open7, open8, open9, open10, open11]);
 
   return (
