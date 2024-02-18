@@ -77,7 +77,7 @@ export default function BasicModal11(props) {
       });
       setAtualize(body);
       setAtualize2(body);
-      handleClose2();
+      handleClose11();
     } catch (e) {
       return({ type: 404, message: e});
     }

@@ -241,7 +241,7 @@ export default function EnhancedTable6(props) {
   const [visibleRows, setVisibleRows] = React.useState(null);
   const [atualize, setAtualize] = React.useState('');
   const [treatmentRows, setTreatmentRows] = React.useState('');
-  const { createRows2 } = React.useContext(BaereContext);
+  const { createRows6 } = React.useContext(BaereContext);
   const [treatmentRowsOG, setTreatmentRowsOG] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
@@ -293,7 +293,7 @@ export default function EnhancedTable6(props) {
 
   React.useEffect(() => {
     const getRows = async () => {
-      const rows = await createRows2(id);
+      const rows = await createRows6();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       let rowsOnMount = stableSort(
@@ -313,7 +313,7 @@ export default function EnhancedTable6(props) {
 
   const handleRequestSort = React.useCallback(
     async (event, newOrderBy) => {
-      const rows = await createRows2(id);
+      const rows = await createRows6();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       const isAsc = orderBy === newOrderBy && order === 'asc';
@@ -334,7 +334,7 @@ export default function EnhancedTable6(props) {
 
   const handleSelectAllClick = async (event) => {
     if (event.target.checked) {
-      const rows = await createRows2(id);
+      const rows = await createRows6();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       const newSelected = rows.map((n) => n);
@@ -369,7 +369,7 @@ export default function EnhancedTable6(props) {
 
   const handleChangePage = React.useCallback(
     async (event, newPage) => {
-      const rows = await createRows2(id);
+      const rows = await createRows6();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       setPage(newPage);
@@ -394,7 +394,7 @@ export default function EnhancedTable6(props) {
 
   const handleChangeRowsPerPage = React.useCallback(
     async (event) => {
-      const rows = await createRows2(id);
+      const rows = await createRows6();
       setTreatmentRows(rows);
       setTreatmentRowsOG(rows);
       const updatedRowsPerPage = parseInt(event.target.value, 10);

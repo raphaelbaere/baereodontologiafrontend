@@ -194,6 +194,35 @@ async function createRows5() {
   }
 }
 
+async function createRows6() {
+  function createData(alergia,
+  medicacao,
+  complicacao,
+  valvula,
+  hipertenso,
+  diabetico) {
+    return {
+      alergia,
+      medicacao,
+      complicacao,
+      valvula,
+      hipertenso,
+      diabetico
+    };
+  }
+  try {
+    const response = await fetch(`${urlRequisicao}/anamnese`);
+    const data = await response.json();
+
+    const mapRows = data.map((anamnese) => {
+      return createData(format(anamnese.alergia, anamnese.medicacao, anamnese.complicacao, anamnese.valvula, anamnese.hipertenso, anamnese.diabetico))
+    });
+    return mapRows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 async function createRows3(id) {
   function createData(data, pagou, tipo, id) {
