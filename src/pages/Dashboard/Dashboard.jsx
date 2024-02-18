@@ -21,6 +21,7 @@ import { mainListItems, secondaryListItems } from '../../components/listItem';
 import Chart from '../../components/Chart';
 import Deposits from '../../components/Deposits';
 import Orders from '../../components/Orders';
+import { BaereContext } from '../../context/BaereProvider';
 
 function Copyright(props) {
   return (
@@ -94,9 +95,18 @@ const theme2 = createTheme({
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const handleClick = async () => {
+    console.log('ue')
+    const response = await fetch(`${urlRequisicao}/googleCloud`);
+    console.log(response)
+    const data = await response.json();
+    console.log(data)
+    }
 
   return (
     <ThemeProvider theme={theme2}>
@@ -129,7 +139,7 @@ function DashboardContent() {
             >
               Painel
             </Typography>
-            <IconButton color="inherit">
+            <IconButton onClick={handleClick} color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>

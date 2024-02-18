@@ -18,7 +18,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '50%',
-    height: '90%',
+    height: '80%',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -26,7 +26,7 @@ const style = {
 };
 
 export default function BasicModal14(props) {
-    const { setAtualize } = props;
+    const { setAtualize, setAtualize2 } = props;
     const { open14, handleClose14 } = React.useContext(BaereContext);
     const { urlRequisicao, eventSelected } = React.useContext(BaereContext);
     const { id } = useParams();
@@ -53,22 +53,40 @@ export default function BasicModal14(props) {
                 method: 'DELETE',
               });
             // Atualize após a deleção de todos os pacientes
-            setAtualize(true);
+            setAtualize(Math.random() * 9999);
+            setAtualize2(Math.random() * 9999);
             handleClose14();
           } catch (error) {
             console.error('Erro ao excluir evento:', error);
           }
     }
 
+    const arrumarData = (date) => {
+        const newDateData = new Date(date);
+        // Adicionando 1 dia à data
+        newDateData.setDate(newDateData.getDate() + 1);
+
+        // Obtendo o dia, mês e ano formatados
+        const day = newDateData.getDate() + 16;
+        const month = newDateData.getMonth(); // Mês começa do zero, então somamos 1
+        const year = newDateData.getFullYear();
+
+        // Formatando a data no formato dd/MM/yyyy
+        const formattedEndDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+
+        return formattedEndDate
+    }
+
     React.useEffect(() => {
         const fetchEvento = async () => {
             const response = await fetch(`${urlRequisicao}/eventos/${eventSelected.id}`);
             const data = await response.json();
-            console.log(data);
             setState((prev) => ({
                 ...prev,
                 evento: data
             }));
+            setAtualize(data);
+            setAtualize2(data);
         }
         fetchEvento();
     }, [eventSelected])
@@ -86,14 +104,6 @@ export default function BasicModal14(props) {
                         <Typography id="modal-modal-title" variant="h4" component="h2">
                             Informações do evento
                         </Typography>
-                        <div id="action-buttons">
-                            <Button variant="outlined" startIcon={<ClearAllIcon />}>
-                                Limpar os campos
-                            </Button>
-                            <Button color="error" variant="contained" startIcon={<DisabledByDefaultIcon />}>
-                                Cancelar
-                            </Button>
-                        </div>
                     </div>
                     <div id="info-event">
                         {state.evento[0] && (
@@ -126,18 +136,18 @@ export default function BasicModal14(props) {
                                     <strong>
                                     O evento começará no dia:
                                     </strong>
-                                     {format(new Date(state.evento[0]?.start_date), 'dd/MM/yyyy')}
+                                     {arrumarData(state.evento[0]?.start_date)}
                                 </Typography>
                                 <Typography>
                                     <strong>
                                     O evento encerrará no dia:
                                     </strong>
-                                    {format(new Date(new Date(state.evento[0]?.end_date).setDate(new Date(state.evento[0]?.end_date).getDate() + 1)), 'dd/MM/yyyy')}
+                                    {arrumarData(state.evento[0]?.end_date)}
                                 </Typography>
                             </div>
                         )}
                     </div>
-                    <Button sx={{ width: '20%', height: '10%'}} onClick={handleSubmit} id="adicionar-tratamento" color="error" variant="contained" endIcon={<DeleteIcon />}>
+                    <Button sx={{ width: '20%', height: '15%'}} onClick={handleSubmit} id="adicionar-tratamento" color="error" variant="contained" endIcon={<DeleteIcon />}>
                         Remover evento
                     </Button>
                 </Box>

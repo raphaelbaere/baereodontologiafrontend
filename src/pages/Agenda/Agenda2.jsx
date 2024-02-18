@@ -23,6 +23,7 @@ import BasicModal from '../../components/Modal';
 import '../../styles/Pacientes.css';
 import { useState, useEffect } from 'react';
 import Agenda from './Agenda';
+import { format } from 'date-fns';
 
 function Copyright(props) {
   return (
@@ -102,6 +103,10 @@ function DashboardContent(props) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    console.log(atualize)
+  }, [atualize])
 
   return (
     <ThemeProvider theme={theme2}>
@@ -186,7 +191,7 @@ function DashboardContent(props) {
                     height: 'auto',
                   }}
                 >
-                <Agenda setAtualize={setAtualize}></Agenda>
+                <Agenda setAtualize={setAtualize} atualize={atualize}></Agenda>
                 </Paper>
               </Grid>
               {/* Recent Deposits */}

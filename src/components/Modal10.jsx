@@ -24,7 +24,7 @@ const style = {
 };
 
 export default function BasicModal10(props) {
-  const { setAtualize, handleSelectSlot } = props;
+  const { setAtualize, setAtualize2, handleSelectSlot } = props;
   const { open10, handleClose10 } = React.useContext(BaereContext);
   const { urlRequisicao, endDate, startDate } = React.useContext(BaereContext);
   const { id } = useParams();
@@ -54,7 +54,6 @@ export default function BasicModal10(props) {
       start_date: startDate,
       end_date: endDate,
     }
-    console.log(body)
     try {
       const response = await fetch(`${urlRequisicao}/eventos`, {
         method: 'POST',
@@ -63,9 +62,10 @@ export default function BasicModal10(props) {
         },
         body: JSON.stringify(body),
       });
-      console.log(response);
+      console.log(body, 'body')
       handleClose10();
       setAtualize(body);
+      setAtualize2(body);
     } catch (e) {
       return({ type: 404, message: e});
     }
