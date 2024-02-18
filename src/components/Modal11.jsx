@@ -26,6 +26,7 @@ const style = {
 export default function BasicModal11(props) {
   const { setAtualize, setAtualize2 } = props;
   const { open11, handleClose11 } = React.useContext(BaereContext);
+  const { urlRequisicao } = React.useContext(BaereContext);
   const { id } = useParams();
 
   const [state, setState] = React.useState({
@@ -63,6 +64,23 @@ export default function BasicModal11(props) {
 
 
   const handleSubmit = async () => {
+    const body = {
+      ...state,
+    }
+    try {
+      const response = await fetch(`${urlRequisicao}/anamnese/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      setAtualize(body);
+      setAtualize2(body);
+      handleClose2();
+    } catch (e) {
+      return({ type: 404, message: e});
+    }
   };
 
   return (
