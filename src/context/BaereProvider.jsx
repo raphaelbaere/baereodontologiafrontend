@@ -9,7 +9,7 @@ export const BaereContext = createContext();
 function BaereProvider({children}) {
   const [open, setOpen] = React.useState(false);
 
-  const urlRequisicao = 'https://extbaereodontoserver2055-dtkwd4jzea-rj.a.run.app';
+  const urlRequisicao = 'https://extbaereodontologiaversaoavatar-dtkwd4jzea-rj.a.run.app';
 
   const [startDate, setStartDate] = React.useState('');
 

@@ -28,6 +28,12 @@ const monthMap = {
 };
 
 function convertToISODateString(dateString) {
+    // Mapear os nomes dos meses para seus números equivalentes
+    const monthMap = {
+        'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+        'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
+    };
+
     // Dividir a string em partes usando o espaço como separador entre data e hora
     const parts = dateString.split(' ');
 
@@ -39,8 +45,11 @@ function convertToISODateString(dateString) {
         horaAUsar = '0' + horaAUsar;
     }
 
+    // Verificar se o dia é menor que 10 e adicionar um zero, se necessário
+    const day = parts[2] < 10 ? `0${parts[2]}` : parts[2];
+
     // Reorganizar as partes para o formato ISO 8601
-    const isoDateString = `${parts[3]}-${monthMap[parts[1]]}-${parts[2]}T${horaAUsar}`;
+    const isoDateString = `${parts[3]}-${monthMap[parts[1]]}-${day}T${horaAUsar}`;
 
     console.log(isoDateString);
 
@@ -156,7 +165,7 @@ export default function Agenda(props, {
 
             const monthStart = months[dateObjStart.getMonth()];
             const dayOfWeekStart = daysOfWeek[dateObjStart.getDay()];
-            const dayStart = dateObjStart.getDate();
+            let dayStart = dateObjStart.getDate();
             const yearStart = dateObjStart.getFullYear();
             const hourStart = dateObjStart.getUTCHours() - 3;
             const minuteStart = ('0' + dateObjStart.getUTCMinutes()).slice(-2);
@@ -165,7 +174,7 @@ export default function Agenda(props, {
 
             const monthEnd = months[dateObjEnd.getMonth()];
             const dayOfWeekEnd = daysOfWeek[dateObjEnd.getDay()];
-            const dayEnd = dateObjEnd.getDate();
+            let dayEnd = dateObjEnd.getDate();
             const yearEnd = dateObjEnd.getFullYear();
             const hourEnd = dateObjEnd.getUTCHours() - 3;
             const minuteEnd = ('0' + dateObjEnd.getUTCMinutes()).slice(-2);
@@ -179,10 +188,12 @@ export default function Agenda(props, {
             const formattedDateEnd = `${dayOfWeekEnd} ${monthEnd} ${dayEnd} ${yearEnd} ${hourEnd}:${minuteEnd}:${secondEnd
                 } GMT${timezoneOffsetEnd >= 0 ? '+' : ''}${timezoneOffsetEnd}:00 (Horário Padrão de Brasília)`;
 
-            console.log(formattedDateStart)
-            console.log(formattedDateEnd)
-            setStartDate(moment(convertToISODateString(formattedDateStart)).toDate());
-            setEndDate(moment(convertToISODateString(formattedDateEnd)).toDate());
+
+
+            console.log(convertToISODateString(formattedDateStart));
+            console.log(convertToISODateString(formattedDateEnd));
+            setStartDate(convertToISODateString(formattedDateStart));
+            setEndDate(convertToISODateString(formattedDateEnd));
             handleOpen10();
         },
         [myEvents]

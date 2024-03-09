@@ -64,11 +64,27 @@ export default function BasicModal14(props) {
     const arrumarData = (date) => {
         const newDateData = new Date(date);
         // Adicionando 1 dia à data
-        newDateData.setDate(newDateData.getDate() + 1);
+        newDateData.setDate(newDateData.getDate());
 
         // Obtendo o dia, mês e ano formatados
-        const day = newDateData.getDate() + 16;
-        const month = newDateData.getMonth(); // Mês começa do zero, então somamos 1
+        const day = newDateData.getDate();
+        const month = newDateData.getMonth() + 1; // Mês começa do zero, então somamos 1
+        const year = newDateData.getFullYear();
+
+        // Formatando a data no formato dd/MM/yyyy
+        const formattedEndDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+
+        return formattedEndDate
+    }
+
+    const arrumarDataMaisUm = (date) => {
+        const newDateData = new Date(date);
+        // Adicionando 1 dia à data
+        newDateData.setDate(newDateData.getDate());
+
+        // Obtendo o dia, mês e ano formatados
+        const day = newDateData.getDate() + 1;
+        const month = newDateData.getMonth() + 1; // Mês começa do zero, então somamos 1
         const year = newDateData.getFullYear();
 
         // Formatando a data no formato dd/MM/yyyy
@@ -130,13 +146,13 @@ export default function BasicModal14(props) {
                                     <strong>
                                     Paciente que receberá o tratamento:
                                     </strong>
-                                     {state.evento[0]?.paciente.nome}
+                                     {state.evento[0]?.paciente}
                                 </Typography>
                                 <Typography>
                                     <strong>
                                     O evento começará no dia:
                                     </strong>
-                                     {arrumarData(state.evento[0]?.start_date)}
+                                     {arrumarDataMaisUm(state.evento[0]?.start_date)}
                                 </Typography>
                                 <Typography>
                                     <strong>

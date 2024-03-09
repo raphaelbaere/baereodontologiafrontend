@@ -34,7 +34,6 @@ export default function BasicModal10(props) {
     paciente: "",
     doutor: "",
     tratamento: "",
-    pacientes: [],
   })
 
   function handleChange(evt) {
@@ -48,7 +47,7 @@ export default function BasicModal10(props) {
   const handleSubmit = async () => {
     const body = {
       ...state,
-      paciente_id: +state.paciente,
+      paciente: state.paciente,
       doutor_id: +state.doutor,
       tratamento_id: +state.tratamento,
       start_date: startDate,
@@ -70,18 +69,6 @@ export default function BasicModal10(props) {
       return({ type: 404, message: e});
     }
   }
-
-  React.useEffect(() => {
-    const fetchPacientes = async () => {
-      const response = await fetch(`${urlRequisicao}/pacientes`);
-      const data = await response.json();
-      setState((prev) => ({
-        ...prev,
-        pacientes: data
-    }));
-    }
-    fetchPacientes();
-  }, [])
 
   return (
     <div>
@@ -107,22 +94,7 @@ export default function BasicModal10(props) {
           </div>
           <form id="add-new-ficha">
           <TextField id="outlined-basic" onChange={handleChange} name="titulo" value={state.titulo} type="text" label="Título do evento" variant="outlined" />
-          <FormControl>
-            <InputLabel id="demo-simple-select-label2">Paciente</InputLabel>
-            <Select
-            labelId="demo-simple-select-label2"
-            id="demo-simple-select-label2"
-            label="Paciente"
-            name="paciente"
-            sx={{ width: '200px' }}
-            value={state.paciente}
-            onChange={handleChange}
-          >
-            {state.pacientes.map((item) => (
-              <MenuItem value={item.id}>{item.nome}</MenuItem>
-            ))}
-          </Select>
-          </FormControl>
+          <TextField id="outlined-basic" onChange={handleChange} name="paciente" value={state.paciente} type="text" label="Paciente" variant="outlined" />
             <FormControl>
             <InputLabel id="demo-simple-select-label2">Doutor</InputLabel>
             <Select
