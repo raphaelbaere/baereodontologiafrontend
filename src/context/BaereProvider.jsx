@@ -195,11 +195,12 @@ async function createRows4() {
 }
 
 async function createRows5() {
-  function createData(data, pagou, tipo, id) {
+  function createData(data, pagou, tipo, paciente_id, id) {
     return {
       data, 
       pagou,
       tipo,
+      paciente_id,
       id
     };
   }
@@ -211,7 +212,7 @@ async function createRows5() {
   });
     const mapRows = dataSorted.map((payment) => {
       const date = new Date(payment.data);
-      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.id)
+      return createData(format(date.setDate(date.getDate() + 1), 'dd/MM/yyyy'), payment.pagou, payment.tipo, payment.paciente_id, payment.id)
     });
     return mapRows;
   } catch (error) {

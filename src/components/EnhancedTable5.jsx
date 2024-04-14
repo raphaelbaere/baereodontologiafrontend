@@ -84,10 +84,16 @@ const headCells = [
     label: 'Tipo de pagamento',
   },
   {
+    id: 'patientId',
+    numeric: false,
+    disablePadding: false,
+    label: 'ID do Paciente',
+  },
+  {
     id: 'id',
     numeric: false,
     disablePadding: false,
-    label: 'ID',
+    label: 'ID Do Pagamento',
   },
 ];
 
@@ -490,6 +496,7 @@ export default function EnhancedTable5(props) {
                         </TableCell>
                         <TableCell align="left">{row.pagou}</TableCell>
                         <TableCell align="left">{row.tipo}</TableCell>
+                        <TableCell align="left">{row.paciente_id}</TableCell>
                         <TableCell align="left">{row.id}</TableCell>
                       </TableRow>
                     );
