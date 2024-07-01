@@ -28,6 +28,8 @@ import Title from '../../components/Title';
 import BarChart from '../../components/BarChart';
 import BarChart2 from '../../components/BarChart2';
 import BarChart3 from '../../components/BarChart3';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { BaereContext } from '../../context/BaereProvider';
 
 function Copyright(props) {
   return (
@@ -99,12 +101,60 @@ const theme2 = createTheme({
     },
   });
 
+
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const [atualiza, setAtualiza] = React.useState(Math.random() * 1000000)
   const toggleDrawer = () => {
     setOpen(!open);
   };
+    const { urlRequisicao } = React.useContext(BaereContext);
+
+  const [state, setState] = React.useState({
+    filtroAno: new Date().getFullYear(),
+    years: []
+  });
+
+  function handleChange(evt) {
+    const value = evt.target.value;
+    setState({
+      ...state,
+      [evt.target.name]: value
+    });
+  }
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${urlRequisicao}/pagamentos`);
+        const paymentData = await response.json();
+  
+        // Usar um Set para armazenar anos únicos
+        const uniqueYears = new Set();
+  
+        paymentData.forEach((payment) => {
+          const isoDate = new Date(payment.data);
+          const year = isoDate.getFullYear();
+          uniqueYears.add(year); // Adicionar o ano ao Set
+        });
+  
+        // Converter Set de anos de volta para um array e ordenar (opcional)
+        const yearsArray = Array.from(uniqueYears).sort();
+  
+        // Atualizar o estado com os anos únicos
+        setState(prevState => ({
+          ...prevState,
+          years: yearsArray
+        }));
+        
+      } catch (error) {
+        console.error('Erro ao buscar os dados de pagamento:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
   return (
     <ThemeProvider theme={theme2}>
@@ -297,10 +347,26 @@ function DashboardContent() {
                     width: 665,
                   }}
                 >
-                <Typography align='center' variant="h5" gutterBottom>
+                <Typography sx={{ml: 2}} align='center' variant="h5" gutterBottom>
                     Arrendamento/mês
+                    <FormControl sx={{ ml: 5, mb: 2, minWidth: 180 }}>
+          <InputLabel id="demo-simple-select-label">Ano</InputLabel>
+          <Select
+            sx={{ width: 100}}
+            labelId="demo-simple-select-label"
+            id="filtroAno-select"
+            label="filtroAno"
+            name="filtroAno"
+            value={state.filtroAno}
+            onChange={handleChange}
+          >
+            {state.years.map((year) => (
+            <MenuItem value={year}>{year}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
                 </Typography>
-                  <BarChart3 setAtualiza={setAtualiza} />
+                  <BarChart3 setAtualiza={setAtualiza} filtroAno={state.filtroAno} />
                 </Paper>
               </Grid>
               {/* Recent Orders */}

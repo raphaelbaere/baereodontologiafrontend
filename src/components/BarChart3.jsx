@@ -11,89 +11,84 @@ const CustomTooltip = ({ active, payload }) => {
         <div className="custom-tooltip" style={{ border: 'none', boxShadow: 'none', backgroundColor: 'white', color: 'black' }}>
           <p><strong>Mês:</strong> {payload[0].payload.name}</p>
           <p><strong>Rendimento Bruto:</strong> R${payload[0].payload.bruto}</p>
-          <p><strong>Rendimento Líquido:</strong> R${payload[0].payload.lucro}</p>
         </div>
       );
     }
     return null;
   };
 
-const Example = () => {
+const Example = ({ setAtualiza, filtroAno }) => {
     const [data, setData] = useState([]);
+    console.log(filtroAno)
     const { urlRequisicao } = React.useContext(BaereContext);
     useEffect(() => {
       const fetchData = async () => {
         const hoje = Date.now();
         try {
-            const paymentCounts = {};
-
-            const response = await fetch(`${urlRequisicao}/pagamentos`);
-            const paymentData = await response.json();
-            const treatment = await fetch(`${urlRequisicao}/tratamentos`);
-            const treatmentData = await treatment.json();
-            const treatmentDataFiltered = treatmentData.filter((eachTreatment) => eachTreatment.realizado === 'Sim');
-
-            const monthNames = [
-                'Janeiro', 'Fevereiro', 'Março', 'Abril',
-                'Maio', 'Junho', 'Julho', 'Agosto',
-                'Setembro', 'Outubro', 'Novembro', 'Dezembro',
-              ];
-              
-              const colors = [
-                '#FF5733', '#33FF57', '#5733FF', '#33FFFA', '#FF33F1',
-                '#33F1FF', '#33FF33', '#FF3333', '#33FFFF', '#FFFF33',
-                '#33F6FF', '#FF33A6', '#33A6FF', '#F6FF33', '#FF6E33',
-                '#6E33FF', '#6EFF33', '#F633FF', '#F6336E', '#6FF633',
-                '#336EFF', '#F36E33', '#336EF3', '#336EF3', '#F3336E',
-                '#6EF333', '#F33F6E',
-              ];
-
-              paymentData.forEach((payment) => {
-                const isoDate = new Date(payment.data); // Converta a data ISO em um objeto Date
-                const month = isoDate.getMonth(); // Obtenha o mês (0 a 11)
-            
-                // Use o mês como chave para o objeto de contagem
-                if (paymentCounts[month] === undefined) {
-                    paymentCounts[month] = {
-                      bruto: payment.pagou,
-                    };
-                } else {
-                    paymentCounts[month].bruto += payment.pagou;
-                }
-              });
-
-              treatmentDataFiltered.forEach((treatment) => {
-                const isoDate = new Date(treatment.data); // Converta a data ISO em um objeto Date
-                const month = isoDate.getMonth(); // Obtenha o mês (0 a 11)
-            
-                // Use o mês como chave para o objeto de contagem
-                if (paymentCounts[month].desconto === undefined) {
-                    paymentCounts[month].desconto = treatment.desconto
-                } else {
-                    paymentCounts[month].desconto += treatment.desconto;
-                }
-              });
-
-              const dataArr = Object.entries(paymentCounts).map(([month, values], index) => ({
-                name: monthNames[month], // Use o array de nomes dos meses
-                bruto: values.bruto,
-                lucro: values.bruto - values.desconto,
-                fill: colors[index],
-              }));
-            
-      
-          // Processar os dados para contar o número de pacientes em cada bairro
-
-  
-          // Definir os dados no estado
+          const paymentCounts = {};
+    
+          // Fetch de pagamentos
+          const response = await fetch(`${urlRequisicao}/pagamentos`);
+          const paymentDataUnfiltered = await response.json();
+    
+          // Filtrar os pagamentos pelo filtro de ano
+          const paymentData = paymentDataUnfiltered.filter(payment => {
+            const isoDate = new Date(payment.data);
+            return isoDate.getFullYear() === filtroAno;
+          });
+    
+          // Fetch de tratamentos realizados
+          const treatmentResponse = await fetch(`${urlRequisicao}/tratamentos`);
+          const treatmentData = await treatmentResponse.json();
+          const treatmentDataFiltered = treatmentData.filter(treatment => treatment.realizado === 'Sim');
+    
+          // Arrays para mês e cores
+          const monthNames = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril',
+            'Maio', 'Junho', 'Julho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro',
+          ];
+    
+          const colors = [
+            '#FF5733', '#33FF57', '#5733FF', '#33FFFA', '#FF33F1',
+            '#33F1FF', '#33FF33', '#FF3333', '#33FFFF', '#FFFF33',
+            '#33F6FF', '#FF33A6', '#33A6FF', '#F6FF33', '#FF6E33',
+            '#6E33FF', '#6EFF33', '#F633FF', '#F6336E', '#6FF633',
+            '#336EFF', '#F36E33', '#336EF3', '#336EF3', '#F3336E',
+            '#6EF333', '#F33F6E',
+          ];
+    
+          // Contagem de pagamentos brutos por mês
+          paymentData.forEach(payment => {
+            const isoDate = new Date(payment.data);
+            const month = isoDate.getMonth();
+    
+            if (!paymentCounts[month]) {
+              paymentCounts[month] = {
+                bruto: payment.pagou,
+                desconto: 0 // Inicializar desconto se ainda não existir
+              };
+            } else {
+              paymentCounts[month].bruto += payment.pagou;
+            }
+          });
+    
+          // Formatar dados para o gráfico
+          const dataArr = Object.entries(paymentCounts).map(([month, values], index) => ({
+            name: monthNames[month], // Usar nomes dos meses
+            bruto: values.bruto,
+            fill: colors[index],
+          }));
+    
+          // Definir dados no estado
           setData(dataArr);
         } catch (error) {
           console.log(error);
         }
       };
-  
+    
       fetchData();
-    }, []);
+    }, [filtroAno]); 
   return (
 <ResponsiveContainer width="100%" height="100%">
   <BarChart
@@ -112,7 +107,6 @@ const Example = () => {
     <YAxis />
     <Tooltip content={<CustomTooltip />} />
     <Bar dataKey="bruto" fill="#82ca9d" name="Montante Arrendado" />
-    <Bar dataKey="lucro" fill="#8884d8" name="Lucro Líquido" fillOpacity={0.6} />
   </BarChart>
 </ResponsiveContainer>
   );
