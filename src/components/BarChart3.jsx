@@ -61,8 +61,9 @@ const Example = ({ setAtualiza, filtroAno }) => {
           // Contagem de pagamentos brutos por mês
           paymentData.forEach(payment => {
             const isoDate = new Date(payment.data);
-            const month = isoDate.getMonth();
-    
+            isoDate.setDate(isoDate.getDate() + 1);
+            const month = isoDate.getMonth(); // Adicionar +1 para ajustar o mês
+          
             if (!paymentCounts[month]) {
               paymentCounts[month] = {
                 bruto: payment.pagou,
